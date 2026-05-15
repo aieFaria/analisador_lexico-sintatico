@@ -1,0 +1,21 @@
+package com.faria;
+import java_cup.runtime.*;
+
+
+terminal String NUMBER;
+terminal TRIANGULO, PAR_OPEN, PAR_CLOSE, SEMICOLON, COMMA;
+non terminal S;
+
+S ::= TRIANGULO PAR_OPEN
+        NUMBER:n1 COMMA
+        NUMBER:n2 COMMA
+        NUMBER:n3 PAR_CLOSE SEMICOLON
+        {:
+            int a = Integer.parseInt(n1);
+            int b = Integer.parseInt(n2);
+            int c = Integer.parseInt(n3);
+            if((a+b>c) && (a+c>b) && (b+c>a))
+                System.out.println("Is a triangle");
+            else
+                System.out.println("Not a triangle");
+        :};
