@@ -24,7 +24,10 @@ public class Database {
                                     "id INTEGER PRIMARY KEY, " +
                                     "lexema TEXT, " + 
                                     "token TEXT, " +
-                                    "valor TEXT);");
+                                    "valor TEXT, " + 
+                                    "line INTEGER, "+
+                                    "column INTEGER, "+
+                                    "codeinfo_id INTEGER);");
         }
     }
 

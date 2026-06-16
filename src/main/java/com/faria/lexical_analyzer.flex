@@ -43,62 +43,61 @@ texto  = \'[^\']*\' | \"[^\"]*\"
 
 %%
 
-<YYINITIAL> {
-    /* Estrutura Principal da Linguagem */
-    "LEDGER"        { return createSymbol(Sym.LEDGER); }
-    "CLOSE"         { return createSymbol(Sym.CLOSE); }
-    "LET"           { return createSymbol(Sym.LET); }
-    "$>"            { return createSymbol(Sym.PRINT); }
+/* Estrutura Principal da Linguagem */
+"LEDGER"        { return createSymbol(Sym.LEDGER); }
+"CLOSE"         { return createSymbol(Sym.CLOSE); }
+"LET"           { return createSymbol(Sym.LET); }
+"$>"            { return createSymbol(Sym.PRINT); }
 
-    /* Palavras-Chave e Condicionais */
-    "IF"            { return createSymbol(Sym.IF); }
-    "::"            { return createSymbol(Sym.ELSE); }
-    "TRUE"          { return createSymbol(Sym.TRUE); }
-    "FALSE"         { return createSymbol(Sym.FALSE); }
+/* Palavras-Chave e Condicionais */
+"IF"            { return createSymbol(Sym.IF); }
+"::"            { return createSymbol(Sym.ELSE); }
+"TRUE"          { return createSymbol(Sym.TRUE); }
+"FALSE"         { return createSymbol(Sym.FALSE); }
 
-    /* Símbolos de Tipagem (Separados para bater com a GLC do Parser) */
-    "$" /{id}            { return createSymbol(Sym.DECI); }
-    "#" /{id}            { return createSymbol(Sym.INT); }
-    "@" /{id}             { return createSymbol(Sym.STR); }
-    "?" /{id}            { return createSymbol(Sym.BOO); }
-    "!" /{id}            { return createSymbol(Sym.KEY); }
-    "~" /{id}            { return createSymbol(Sym.NULL); }
+/* Símbolos de Tipagem (Separados para bater com a GLC do Parser) */
+"$" /{id}            { return createSymbol(Sym.DECI); }
+"#" /{id}            { return createSymbol(Sym.INT); }
+"@" /{id}            { return createSymbol(Sym.STR); }
+"?" /{id}            { return createSymbol(Sym.BOO); }
+"!" /{id}            { return createSymbol(Sym.KEY); }
+"~" /{id}            { return createSymbol(Sym.NULL); }
 
-    /* Delimitadores e Agrupadores */
-    "{"             { return createSymbol(Sym.KEY_OPEN); }
-    "}"             { return createSymbol(Sym.KEY_CLOSE); }
-    "("             { return createSymbol(Sym.PAR_OPEN); }
-    ")"             { return createSymbol(Sym.PAR_CLOSE); }
+/* Delimitadores e Agrupadores */
+"{"             { return createSymbol(Sym.KEY_OPEN); }
+"}"             { return createSymbol(Sym.KEY_CLOSE); }
+"("             { return createSymbol(Sym.PAR_OPEN); }
+")"             { return createSymbol(Sym.PAR_CLOSE); }
 
-    /* Operador de Atribuição */
-    "<-"            { return createSymbol(Sym.setaE); }
+/* Operador de Atribuição */
+"<-"            { return createSymbol(Sym.setaE); }
 
-    /* Operadores Aritméticos */
-    "++"            { return createSymbol(Sym.SOMA); }
-    "--"            { return createSymbol(Sym.SUB); }
-    "**"            { return createSymbol(Sym.MULT); }
-    "//"            { return createSymbol(Sym.DIV); }
-    "%%"            { return createSymbol(Sym.RESTO); }
+/* Operadores Aritméticos */
+"++"            { return createSymbol(Sym.SOMA); }
+"--"            { return createSymbol(Sym.SUB); }
+"**"            { return createSymbol(Sym.MULT); }
+"//"            { return createSymbol(Sym.DIV); }
+"%%"            { return createSymbol(Sym.RESTO); }
 
-    /* Operadores Relacionais e Lógicos */
-    "=="            { return createSymbol(Sym.IGUAL); }
-    "!="            { return createSymbol(Sym.DIF); }
-    ">>"            { return createSymbol(Sym.MAIOR); }
-    "<<"            { return createSymbol(Sym.MENOR); }
-    ">="            { return createSymbol(Sym.MAIOR_IGUAL); }
-    "<="            { return createSymbol(Sym.MENOR_IGUAL); }
-    "&&"            { return createSymbol(Sym.AND); }
-    "||"            { return createSymbol(Sym.OR); }
-    "!!"            { return createSymbol(Sym.NOT); }
+/* Operadores Relacionais e Lógicos */
+"=="            { return createSymbol(Sym.IGUAL); }
+"!="            { return createSymbol(Sym.DIF); }
+">>"            { return createSymbol(Sym.MAIOR); }
+"<<"            { return createSymbol(Sym.MENOR); }
+">="            { return createSymbol(Sym.MAIOR_IGUAL); }
+"<="            { return createSymbol(Sym.MENOR_IGUAL); }
+"&&"            { return createSymbol(Sym.AND); }
+"||"            { return createSymbol(Sym.OR); }
+"!!"            { return createSymbol(Sym.NOT); }
 
-    {id}            { return createSymbol(Sym.ID, yytext()); }
-    {texto}         { return createSymbol(Sym.TEXT, yytext()); }
-    {espaco}        { /* ignorar */ }
+{id}            { return createSymbol(Sym.ID, yytext()); }
+{texto}         { return createSymbol(Sym.TEXT, yytext()); }
+{espaco}        { /* ignorar */ }
 
-    .               { 
-                        defineError(yyline + 1, yycolumn + 1, "Caractere inválido ou inesperado '" + yytext() + "'");
-                        return createSymbol(Sym.error); // Não é obrigatório criar esse simbolo
-                    }
-}
+.               { 
+                    defineError(yyline + 1, yycolumn + 1, "Caractere inválido ou inesperado '" + yytext() + "'");
+                    return createSymbol(Sym.error); // Não é obrigatório criar esse simbolo
+                }
+
 
 <<EOF>>             { return createSymbol(Sym.EOF); }
