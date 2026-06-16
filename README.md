@@ -1,19 +1,57 @@
-# analisador_lexico-sintatico
+---
+marp: true
+tittle: JCUP e JFLEX
+theme: uncover
+backgroundColor:  #FFFFFF
+color: #1E293B
+style: |
+  section {
+    padding: 30px;
+  }
+---
+
+<style scoped>
+h2 { font-size: 50px; }
+p, li { font-size: 25px; }
+section { padding: 30px 20px 30px 20px;}
+</style>
+
+# Analisador lexico & sintatico
 A partir da linguagem PIX script apresentada, deseja criar um analisador léxico e sintático para verificar se o código de entrada, escrita em PIX Script, é válida. O analisador léxico deverá ser gerado usando a biblioteca JFlex e o analisador sintático JCup.
 
-> import java.util.Stack
+![width:40%](https://marp.app)
+
+---
+algin: left
+
+
+## ✒️ Grupo: 
+| [<img src="https://avatars.githubusercontent.com/u/99749672?v=4" width=115><br><sub>Gabriel Alexandre</sub>](https://https://github.com/aieFaria) |
+| :---: |
+
+
+---
+
+## Técnologias usadas
 
 A partir da linguagem apresentada, deseja criar um analisador léxico e sintático para
 verificar se o código de entrada, escrita em PIX Script, é válida. O analisador léxico
 deverá ser gerado usando a biblioteca JFlex e o analisador sintático JCup. O seu projeto
 deverá:
 
+---
 
+<style scoped>
+h2 { font-size: 50px; }
+h3 { font-size: 40px; text-align: left }
+p, li { font-size: 20px; }
+section { padding: 30px 20px 30px 20px;}
+</style>
 
-## 📜 Tarefas a serem realizadas:
+## 📜 Tarefas realizadas:
 ### Gerais:
-- [❌] - Gerar Jflex;
-- [❌] - Gerar JCup;
+- [✔️] - Gerar Jflex;
+- [✔️] - Gerar JCup;
 - [❌] - Criar apresentação;
 
 ### Especificos:
@@ -29,6 +67,7 @@ que os lexemas gerados não podem se repetir na tabela de símbolos;
 - [❌] (2,0 pontos) gere uma imagem apresentando a árvore de derivação. Sugestão:
 você pode gerar essa imagem usando a biblioteca Graphviz. 
 
+---
 
 > ✔️ - Feito
 
@@ -85,6 +124,3 @@ Pontos importantes a descrever:
 Com um clique se escolhe a carta e com outro se define o local de destino.
 Dessa forma é possivel realizadar todas as movimentações necessárias.
 
-## ✒️ Autores: 
-| [<img src="https://avatars.githubusercontent.com/u/99749672?v=4" width=115><br><sub>Gabriel Alexandre</sub>](https://https://github.com/aieFaria) |
-| :---: |
