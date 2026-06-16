@@ -164,6 +164,10 @@ p, li { font-size: 30px;
 }
 section { padding: 30px 20px 30px 20px;}
 </style>
+### Gramática Livre De Contexto:
+<p align="center">
+<img width="760" height="605" alt="image" src="https://github.com/user-attachments/assets/4de8d9bb-fb62-4780-acc8-60f88b6d0b7d" />
+</p>
 
 ### 2. 🎲 Banco de Dados
 
