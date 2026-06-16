@@ -4,6 +4,7 @@
 
 package com.faria;
 
+import java_cup.runtime.ComplexSymbolFactory;
 import java_cup.runtime.Symbol;
 
 
@@ -316,6 +317,12 @@ public class Yylex implements java_cup.runtime.Scanner {
   private boolean zzEOFDone;
 
   /* user code: */
+    private ComplexSymbolFactory sf;
+
+    public Yylex(java.io.Reader in, ComplexSymbolFactory sf) { 
+        this(in);
+        this.sf = sf;
+    }
 
     // Métodos para encapsular a criação de objetos Symbol do JCup
     private Symbol createSymbol(int type) {
@@ -333,7 +340,7 @@ public class Yylex implements java_cup.runtime.Scanner {
     }
 
     public TabelaSimbolos tab = new TabelaSimbolos();
-    
+
 
 
   /**

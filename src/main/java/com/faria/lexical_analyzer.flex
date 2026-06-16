@@ -12,11 +12,17 @@ import java_cup.runtime.Symbol;
 %class Yylex
 
 %{
+    private ComplexSymbolFactory sf;
 
     // Métodos para encapsular a criação de objetos Symbol do JCup
     private Symbol createSymbol(int type) {
         return new Symbol(type, yyline + 1, yycolumn + 1);
     }
+
+    public Yylex(java.io.Reader in, ComplexSymbolFactory sf) { 
+        this(in);
+        this.sf = sf;
+    } 
 
     private Symbol createSymbol(int type, Object value) {
         return new Symbol(type, yyline + 1, yycolumn + 1, value);
@@ -91,7 +97,7 @@ texto  = \'[^\']*\' | \"[^\"]*\"
 
     .               { 
                         defineError(yyline + 1, yycolumn + 1, "Caractere inválido ou inesperado '" + yytext() + "'");
-                        return createSymbol(Sym.error); 
+                        return createSymbol(Sym.error); // Não é obrigatório criar esse simbolo
                     }
 }
 

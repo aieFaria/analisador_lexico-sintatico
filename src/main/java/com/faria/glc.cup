@@ -40,7 +40,7 @@ cmdSaida ::= PRINT TEXT:s {:
                             // Sucesso não precisa gerar erro
                         } else {
                             // Gerar erro
-                            syntax_error(s);
+                            // syntax_error(s);
                         }
                    :};
 declaration ::= LET tipo ID | LET tipo atrib;

@@ -245,24 +245,24 @@ public class Parser extends java_cup.runtime.lr_parser {
 
  
  
-    public void syntax_error(Symbol s) {     
-        this.defineError(s.left, s.right);    
-    } 
+    // public void syntax_error(Symbol s) {     
+    //     this.defineError(s.left, s.right);    
+    // } 
  
     public void defineError(int line, int column, String text) { 
         Yylex scanner = (Yylex) this.getScanner(); 
         scanner.defineError(line, column, text); 
     } 
  
-    public void defineError(int linha, int coluna) {    
-        Yylex scanner = (Yylex) this.getScanner(); 
-        scanner.defineError(linha, coluna); 
-    } 
+    // public void defineError(int linha, int coluna) {    
+    //     Yylex scanner = (Yylex) this.getScanner(); 
+    //     scanner.defineError(linha, coluna); 
+    // } 
  
-    public void defineError(String text) { 
-        Yylex scanner = (Yylex) this.getScanner(); 
-        scanner.defineError(text); 
-    } 
+    // public void defineError(String text) { 
+    //     Yylex scanner = (Yylex) this.getScanner(); 
+    //     scanner.defineError(text); 
+    // } 
 
 
 /** Cup generated class to encapsulate user supplied action code.*/
@@ -378,7 +378,7 @@ class CUP$Parser$actions {
                             // Sucesso não precisa gerar erro
                         } else {
                             // Gerar erro
-                            syntax_error(s);
+                            // syntax_error(s);
                         }
                    
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("cmdSaida",8, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);

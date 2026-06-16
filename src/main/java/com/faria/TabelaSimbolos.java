@@ -1,9 +1,8 @@
 package com.faria;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
+
 
 public class TabelaSimbolos {
     
@@ -23,8 +22,10 @@ public class TabelaSimbolos {
             linha[1] = termo; // Lexema
             linha[2] = termo; // Token
             linha[3] = termo; // Valor
-            
+
             tabela.add(linha);
+
+            hashCtrl.add(termo); // Para não repetir mesmo objeto
         }
     }
 }

@@ -57,7 +57,7 @@ section { padding: 30px 20px 30px 20px;}
 | Maven | para gerenciar as dependencias do projeto |
 | JFlex | Dependencia para criar analisador léxico |
 | JCup | Dependencia para criar analisador sintático |
-| Graviphz | Para gerar imagem da arvore de derivação |
+| Graphviz | Para gerar imagem da arvore de derivação |
 | SQLite | Banco de dados |
 | Marp | Para criar a apresentação via Readme |
 | Draw.io | Para geração dos diagramas |
@@ -87,10 +87,10 @@ Script (Gabriel);
      - [❌] Sub tarefa: Criar GLC visual normal para inserir no slide (Railson);
 - [❌] (1,0 pontos) ter as regras do analisador léxico para validar e gerar os tokens;
 - [❌] (1,0 pontos) criar um sistema de log de erros;
-- [❌] (1,5 pontos) gerar a tabela de símbolos e gravar no banco de dados. Lembrando
+- [🔘] (1,5 pontos) gerar a tabela de símbolos e gravar no banco de dados. Lembrando
 que os lexemas gerados não podem se repetir na tabela de símbolos;
 - [❌] (1,5 pontos) a partir do log de erros gravar no banco de dados;
-(2,0 pontos) gerar a árvore de derivação do código;
+- [❌] (2,0 pontos) gerar a árvore de derivação do código;
 - [❌] (2,0 pontos) gere uma imagem apresentando a árvore de derivação. Sugestão:
 você pode gerar essa imagem usando a biblioteca Graphviz. 
 
