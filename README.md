@@ -12,17 +12,24 @@ style: |
 
 <style scoped>
 h2 { font-size: 50px; }
-p, li { font-size: 25px; }
+p, li { font-size: 25px; 
+        text-align: justify;
+ }
 section { padding: 30px 20px 30px 20px;}
 </style>
 
-# Analisador lexico & sintatico
+# 🔎 Analisador lexico & sintatico
 A partir da linguagem PIX script apresentada, deseja criar um analisador léxico e sintático para verificar se o código de entrada, escrita em PIX Script, é válida. O analisador léxico deverá ser gerado usando a biblioteca JFlex e o analisador sintático JCup.
 
 ![width:40%](https://marp.app)
 
 ---
-algin: left
+<style scoped>
+h2 { 
+     font-size: 72px; 
+     text-align: left;
+}
+</style>
 
 
 ## ✒️ Grupo: 
@@ -32,19 +39,39 @@ algin: left
 
 ---
 
-## Técnologias usadas
+<style scoped>
+h2 { font-size: 50px; }
+h3 { font-size: 40px; text-align: left }
+table {
+  font-size: 30px;
+}
+p, li { font-size: 20px; }
+section { padding: 30px 20px 30px 20px;}
+</style>
 
-A partir da linguagem apresentada, deseja criar um analisador léxico e sintático para
-verificar se o código de entrada, escrita em PIX Script, é válida. O analisador léxico
-deverá ser gerado usando a biblioteca JFlex e o analisador sintático JCup. O seu projeto
-deverá:
+## 💻 Técnologias usadas
+
+| Tecnologia | Descrição |
+| :--- | :--- |
+| Java | Linguagem de programação usada |
+| Maven | para gerenciar as dependencias do projeto |
+| JFlex | Dependencia para criar analisador léxico |
+| JCup | Dependencia para criar analisador sintático |
+| Graviphz | Para gerar imagem da arvore de derivação |
+| SQLite | Banco de dados |
+| Marp | Para criar a apresentação via Readme |
+| Draw.io | Para geração dos diagramas |
+
+
 
 ---
 
 <style scoped>
 h2 { font-size: 50px; }
 h3 { font-size: 40px; text-align: left }
-p, li { font-size: 20px; }
+p, li { font-size: 20px; 
+        text-align: justify;
+}
 section { padding: 30px 20px 30px 20px;}
 </style>
 
@@ -67,16 +94,24 @@ que os lexemas gerados não podem se repetir na tabela de símbolos;
 - [❌] (2,0 pontos) gere uma imagem apresentando a árvore de derivação. Sugestão:
 você pode gerar essa imagem usando a biblioteca Graphviz. 
 
----
 
 > ✔️ - Feito
 
 > 🔘 - Em andamento
 
 > ❌ - Não iniciado
+---
+
+<style scoped>
+h2 { font-size: 50px; 
+     text-align: left;}
+h3 { font-size: 40px; text-align: left }
+p, li { font-size: 20px; }
+section { padding: 30px 20px 30px 20px;}
+</style>
 
 
-## 📦 Disposição do programa
+## 📦 Disposição do programa:
      .
      ├── abalisador_lexico-sintatico
      │   └── src
@@ -104,18 +139,65 @@ você pode gerar essa imagem usando a biblioteca Graphviz.
      └── analisador_lexico-sintatico.jar
      .
 
+---
+
+<style scoped>
+h2 { font-size: 50px;}
+h3 { font-size: 40px; text-align: left }
+p, li { font-size: 30px; 
+        text-align: justify;
+}
+section { padding: 30px 20px 30px 20px;}
+</style>
+
 ## 👷 Desenvolvimento
 
-1.  ### 📚 Principais Classes
+### 1. 📚 Principais Classes
 Descreve o funcionamento das principais classes do projeto.
 
-2. ###  ♻️ Fluxo de execução da classe App.java
+---
+
+<style scoped>
+h3 { font-size: 40px; text-align: left }
+p, li { font-size: 30px; 
+        text-align: justify;
+}
+section { padding: 30px 20px 30px 20px;}
+</style>
+
+### 2. 🎲 Banco de Dados
+
+Inserir diagramas de representação do banco de dados
+
+
+---
+
+<style scoped>
+h3 { font-size: 40px; text-align: left }
+p, li { font-size: 30px; 
+        text-align: justify;
+}
+section { padding: 30px 20px 30px 20px;}
+</style>
+
+### 3. ♻️ Fluxo de execução da classe App.java
 Descreve o funcionamento ideal do nosso programa. A chamada da função:
 ```
 public static void main(String[] args) { ... }
 ```
+PROVAVELMENTE VAI PRECISAR DE VARIOS DESTES PARA EXPLICAR
 
-## 👾 Como executar?
+---
+
+<style scoped>
+h3 { font-size: 40px; text-align: left }
+p, li { font-size: 30px; 
+        text-align: justify;
+}
+section { padding: 30px 20px 30px 20px;}
+</style>
+
+## 🚀 Como executar?
 Pontos importantes a descrever:
 - Como o programa própriamente: 
 - Como são armazenados os Logs;

@@ -12,6 +12,7 @@ import java_cup.runtime.Symbol;
 %class Yylex
 
 %{
+
     // Métodos para encapsular a criação de objetos Symbol do JCup
     private Symbol createSymbol(int type) {
         return new Symbol(type, yyline + 1, yycolumn + 1);
@@ -87,14 +88,10 @@ texto  = \'[^\']*\' | \"[^\"]*\"
     "||"            { return createSymbol(Sym.OR); }
     "!!"            { return createSymbol(Sym.NOT); }
 
-    /* Identificadores e Strings (Retornando o lexema via String) */
     {id}            { return createSymbol(Sym.ID, yytext()); }
     {texto}         { return createSymbol(Sym.TEXT, yytext()); }
-
-    /* Espaços em branco são ignorados pelo Scanner */
     {espaco}        { /* ignorar */ }
 
-    /* Regra Fallback: Captura caracteres inválidos e aciona o log de erros */
     .               { 
                         defineError(yyline + 1, yycolumn + 1, "Caractere inválido ou inesperado '" + yytext() + "'");
                         return createSymbol(Sym.error); 
