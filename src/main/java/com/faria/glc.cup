@@ -1,21 +1,68 @@
 package com.faria;
 import java_cup.runtime.*;
 
+parser code {: 
+ 
+    public void syntax_error(Symbol s) {     
+        this.defineError(s.left, s.right);    
+    } 
+ 
+    public void defineError(int line, int column, String text) { 
+        Yylex scanner = (Yylex) this.getScanner(); 
+        scanner.defineError(line, column, text); 
+    } 
+ 
+    public void defineError(int linha, int coluna) {    
+        Yylex scanner = (Yylex) this.getScanner(); 
+        scanner.defineError(linha, coluna); 
+    } 
+ 
+    public void defineError(String text) { 
+        Yylex scanner = (Yylex) this.getScanner(); 
+        scanner.defineError(text); 
+    } 
+:}; 
 
-terminal String NUMBER;
-terminal TRIANGULO, PAR_OPEN, PAR_CLOSE, SEMICOLON, COMMA;
-non terminal S;
+terminal String TEXT;
+terminal LEDGER, CLOSE, PAR_OPEN, PAR_CLOSE, PRINT, ID, LET, setaE, KEY_OPEN, 
+         KEY_CLOSE, SOMA, SUB, MULT, DIV, RESTO, NOT, DECI, INT, STR, BOO, KEY, NULL, TRUE, FALSE,
+         OR, AND, IGUAL, DIF, MAIOR, MENOR, MAIOR_IGUAL, MENOR_IGUAL, IF, ELSE;
+non terminal st, stCommand, command, EPSILON, declaration, atrib, cmdIF, values, cmdSaida,
+             tipo, OPR, expr, exprNum, exprNum2, term, OPR_COMP, 
+             OPR_ARITME, cmdElse;
 
-S ::= TRIANGULO PAR_OPEN
-        NUMBER:n1 COMMA
-        NUMBER:n2 COMMA
-        NUMBER:n3 PAR_CLOSE SEMICOLON
-        {:
-            int a = Integer.parseInt(n1);
-            int b = Integer.parseInt(n2);
-            int c = Integer.parseInt(n3);
-            if((a+b>c) && (a+c>b) && (b+c>a))
-                System.out.println("Is a triangle");
-            else
-                System.out.println("Not a triangle");
-        :};
+st ::= LEDGER ID stCommand CLOSE;
+stCommand ::= command stCommand | EPSILON;
+command ::= cmdSaida | declaration | atrib | cmdIF;
+
+cmdSaida ::= PRINT TEXT:s {:
+                        if(s instanceof String) {
+                            // Sucesso não precisa gerar erro
+                        } else {
+                            // Gerar erro
+                            syntax_error(s);
+                        }
+                   :};
+declaration ::= LET tipo ID | LET tipo atrib;
+atrib ::= ID setaE values;
+tipo ::= DECI | INT | STR | BOO | KEY | NULL;
+
+values ::= OPR;
+OPR ::= expr | EPSILON;
+
+expr ::= PAR_OPEN expr OPR_COMP expr PAR_CLOSE
+         | NOT expr
+         | exprNum | TRUE | FALSE;
+
+exprNum ::= term exprNum2;
+exprNum2 ::= OPR_ARITME term exprNum2 | EPSILON;
+term ::= PAR_OPEN exprNum PAR_CLOSE | tipo ID;
+
+OPR_ARITME ::= SOMA | SUB | DIV | RESTO | MULT;
+OPR_COMP ::= OR | AND | IGUAL | DIF | MENOR | MAIOR | MAIOR_IGUAL | MENOR_IGUAL;
+
+cmdIF ::= IF PAR_OPEN values PAR_CLOSE KEY_OPEN stCommand KEY_CLOSE cmdElse;
+cmdElse ::= ELSE KEY_OPEN stCommand KEY_CLOSE | EPSILON;
+
+
+EPSILON ::= ;
