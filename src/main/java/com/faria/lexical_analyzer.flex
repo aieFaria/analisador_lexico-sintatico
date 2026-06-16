@@ -29,13 +29,10 @@ import java_cup.runtime.Symbol;
     }
 %}
 
-/* Definições de Padrões Regulares */
-letra  = [a-zA-Z]
 digito = [0-9]
 espaco = [ \t\r\n]+
 
-/* Identificadores e Literais */
-id     = {letra}({letra}|{digito})*
+id     = [a-zA-Z_$][a-zA-Z0-9_$]*
 texto  = \'[^\']*\' | \"[^\"]*\"
 
 %%
@@ -54,12 +51,12 @@ texto  = \'[^\']*\' | \"[^\"]*\"
     "FALSE"         { return createSymbol(Sym.FALSE); }
 
     /* Símbolos de Tipagem (Separados para bater com a GLC do Parser) */
-    "$"             { return createSymbol(Sym.DECI); }
-    "#"             { return createSymbol(Sym.INT); }
-    "@"             { return createSymbol(Sym.STR); }
-    "?"             { return createSymbol(Sym.BOO); }
-    "!"             { return createSymbol(Sym.KEY); }
-    "~"             { return createSymbol(Sym.NULL); }
+    "$" /{id}            { return createSymbol(Sym.DECI); }
+    "#" /{id}            { return createSymbol(Sym.INT); }
+    "@" /{id}             { return createSymbol(Sym.STR); }
+    "?" /{id}            { return createSymbol(Sym.BOO); }
+    "!" /{id}            { return createSymbol(Sym.KEY); }
+    "~" /{id}            { return createSymbol(Sym.NULL); }
 
     /* Delimitadores e Agrupadores */
     "{"             { return createSymbol(Sym.KEY_OPEN); }

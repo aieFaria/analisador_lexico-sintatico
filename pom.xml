@@ -31,7 +31,6 @@
             <groupId>de.jflex</groupId>
             <artifactId>jflex</artifactId>
             <version>1.9.1</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>

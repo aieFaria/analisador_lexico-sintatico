@@ -4,9 +4,11 @@
 
 package com.faria;
 
+import java_cup.runtime.Symbol;
+
 
 @SuppressWarnings("fallthrough")
-class Yylex {
+public class Yylex implements java_cup.runtime.Scanner {
 
   /** This character denotes the end of file. */
   public static final int YYEOF = -1;
@@ -33,7 +35,7 @@ class Yylex {
   private static final int [] ZZ_CMAP_TOP = zzUnpackcmap_top();
 
   private static final String ZZ_CMAP_TOP_PACKED_0 =
-    "\1\0\u10ff\u0100";
+    "\1\0\37\u0100\1\u0200\267\u0100\10\u0300\u1020\u0100";
 
   private static int [] zzUnpackcmap_top() {
     int [] result = new int[4352];
@@ -61,11 +63,17 @@ class Yylex {
   private static final int [] ZZ_CMAP_BLOCKS = zzUnpackcmap_blocks();
 
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
-    "\60\0\12\1\7\0\32\2\6\0\32\2\162\0\1\2"+
-    "\u0112\0";
+    "\11\0\2\1\2\2\1\1\22\0\1\1\1\3\1\4"+
+    "\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14"+
+    "\1\15\1\0\1\16\1\0\1\17\12\20\1\21\1\0"+
+    "\1\22\1\23\1\24\1\25\1\26\1\27\1\30\1\31"+
+    "\1\32\1\33\1\34\1\35\1\30\1\36\2\30\1\37"+
+    "\2\30\1\40\2\30\1\41\1\42\1\43\1\44\5\30"+
+    "\6\0\32\30\1\45\1\46\1\47\1\50\6\0\1\2"+
+    "\u01a2\0\2\2\326\0\u0100\2";
 
   private static int [] zzUnpackcmap_blocks() {
-    int [] result = new int[512];
+    int [] result = new int[1024];
     int offset = 0;
     offset = zzUnpackcmap_blocks(ZZ_CMAP_BLOCKS_PACKED_0, offset, result);
     return result;
@@ -89,10 +97,16 @@ class Yylex {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\1\0\1\1\1\2\1\3";
+    "\1\0\1\1\1\2\1\3\1\1\1\4\1\5\3\1"+
+    "\1\6\1\7\10\1\1\10\1\11\6\12\1\13\1\1"+
+    "\1\14\1\15\1\16\1\17\1\0\1\20\1\21\1\22"+
+    "\1\23\1\0\1\24\1\25\1\26\1\27\1\30\1\31"+
+    "\1\32\1\33\1\34\1\35\1\36\2\12\1\37\2\12"+
+    "\1\40\3\12\1\41\4\12\1\42\1\43\1\44\1\12"+
+    "\1\45";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[4];
+    int [] result = new int[70];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -117,10 +131,18 @@ class Yylex {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\3\0\6\0\11";
+    "\0\0\0\51\0\122\0\173\0\244\0\51\0\315\0\366"+
+    "\0\u011f\0\u0148\0\51\0\51\0\u0171\0\u019a\0\u01c3\0\u01ec"+
+    "\0\u0215\0\u023e\0\u0267\0\u0290\0\51\0\51\0\u02b9\0\u02e2"+
+    "\0\u030b\0\u0334\0\u035d\0\u0386\0\51\0\u03af\0\51\0\51"+
+    "\0\51\0\51\0\244\0\51\0\51\0\51\0\51\0\u0148"+
+    "\0\51\0\51\0\51\0\51\0\51\0\51\0\51\0\51"+
+    "\0\51\0\51\0\51\0\u03d8\0\u0401\0\u02b9\0\u042a\0\u0453"+
+    "\0\51\0\u047c\0\u04a5\0\u04ce\0\u02b9\0\u04f7\0\u0520\0\u0549"+
+    "\0\u0572\0\u02b9\0\u02b9\0\u02b9\0\u059b\0\u02b9";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[4];
+    int [] result = new int[70];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -143,10 +165,33 @@ class Yylex {
   private static final int [] ZZ_TRANS = zzUnpacktrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\2\1\3\1\4\4\0\1\3\3\0\1\4";
+    "\1\2\1\3\1\0\1\4\1\5\1\6\1\7\1\10"+
+    "\1\11\1\12\1\13\1\14\1\15\1\16\1\17\1\20"+
+    "\1\2\1\21\1\22\1\23\1\24\1\25\1\26\2\27"+
+    "\1\30\2\27\1\31\1\27\1\32\1\33\3\27\1\34"+
+    "\1\27\1\35\1\36\1\37\1\40\52\0\1\3\52\0"+
+    "\1\41\17\0\1\42\25\0\4\43\1\44\44\43\24\0"+
+    "\1\45\33\0\1\46\51\0\1\47\40\0\11\50\1\44"+
+    "\37\50\14\0\1\51\51\0\1\52\51\0\1\53\51\0"+
+    "\1\54\52\0\1\55\45\0\1\56\3\0\1\57\1\60"+
+    "\50\0\1\61\50\0\1\62\1\63\44\0\1\27\6\0"+
+    "\16\27\24\0\1\27\6\0\10\27\1\64\5\27\24\0"+
+    "\1\27\6\0\1\65\15\27\24\0\1\27\6\0\5\27"+
+    "\1\66\10\27\24\0\1\27\6\0\4\27\1\67\11\27"+
+    "\24\0\1\27\6\0\12\27\1\70\3\27\52\0\1\71"+
+    "\22\0\1\27\6\0\11\27\1\72\4\27\24\0\1\27"+
+    "\6\0\10\27\1\73\5\27\24\0\1\27\6\0\3\27"+
+    "\1\74\10\27\1\75\1\27\24\0\1\27\6\0\15\27"+
+    "\1\76\24\0\1\27\6\0\13\27\1\77\2\27\24\0"+
+    "\1\27\6\0\13\27\1\100\2\27\24\0\1\27\6\0"+
+    "\6\27\1\101\7\27\24\0\1\27\6\0\4\27\1\102"+
+    "\11\27\24\0\1\27\6\0\4\27\1\103\11\27\24\0"+
+    "\1\27\6\0\4\27\1\104\11\27\24\0\1\27\6\0"+
+    "\4\27\1\105\11\27\24\0\1\27\6\0\12\27\1\106"+
+    "\3\27\4\0";
 
   private static int [] zzUnpacktrans() {
-    int [] result = new int[12];
+    int [] result = new int[1476];
     int offset = 0;
     offset = zzUnpacktrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -189,10 +234,12 @@ class Yylex {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\1\11\2\1";
+    "\1\0\1\11\3\1\1\11\4\1\2\11\10\1\2\11"+
+    "\6\1\1\11\1\1\4\11\1\0\4\11\1\0\13\11"+
+    "\5\1\1\11\15\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[4];
+    int [] result = new int[70];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -252,11 +299,9 @@ class Yylex {
   private int zzFinalHighSurrogate = 0;
 
   /** Number of newlines encountered up to the start of the matched text. */
-  @SuppressWarnings("unused")
   private int yyline;
 
   /** Number of characters from the last newline up to the start of the matched text. */
-  @SuppressWarnings("unused")
   private int yycolumn;
 
   /** Number of characters up to the start of the matched text. */
@@ -268,8 +313,27 @@ class Yylex {
   private boolean zzAtBOL = true;
 
   /** Whether the user-EOF-code has already been executed. */
-  @SuppressWarnings("unused")
   private boolean zzEOFDone;
+
+  /* user code: */
+
+    // Métodos para encapsular a criação de objetos Symbol do JCup
+    private Symbol createSymbol(int type) {
+        return new Symbol(type, yyline + 1, yycolumn + 1);
+    }
+
+    private Symbol createSymbol(int type, Object value) {
+        return new Symbol(type, yyline + 1, yycolumn + 1, value);
+    }
+
+    // Sistema de Log de Erros exigido pelo professor Gomide
+    public void defineError(int line, int column, String text) {
+        System.err.println("Erro Léxico [Linha " + line + ", Coluna " + column + "]: " + text);
+        // Observação: Aqui no futuro você conectará o seu INSERT do banco de dados (tabela errorlog)
+    }
+
+    public TabelaSimbolos tab = new TabelaSimbolos();
+    
 
 
   /**
@@ -277,7 +341,7 @@ class Yylex {
    *
    * @param   in  the java.io.Reader to read input from.
    */
-  Yylex(java.io.Reader in) {
+  public Yylex(java.io.Reader in) {
     this.zzReader = in;
   }
 
@@ -532,6 +596,18 @@ class Yylex {
   }
 
 
+  /**
+   * Contains user EOF-code, which will be executed exactly once,
+   * when the end of file is reached
+   */
+  private void zzDoEOF() throws java.io.IOException {
+    if (!zzEOFDone) {
+      zzEOFDone = true;
+    
+  yyclose();    }
+  }
+
+
 
 
   /**
@@ -541,7 +617,7 @@ class Yylex {
    * @return the next token.
    * @exception java.io.IOException if any I/O-Error occurs.
    */
-  public int yylex() throws java.io.IOException
+  @Override  public java_cup.runtime.Symbol next_token() throws java.io.IOException
   {
     int zzInput;
     int zzAction;
@@ -559,6 +635,63 @@ class Yylex {
     while (true) {
       zzMarkedPosL = zzMarkedPos;
 
+      boolean zzR = false;
+      int zzCh;
+      int zzCharCount;
+      for (zzCurrentPosL = zzStartRead  ;
+           zzCurrentPosL < zzMarkedPosL ;
+           zzCurrentPosL += zzCharCount ) {
+        zzCh = Character.codePointAt(zzBufferL, zzCurrentPosL, zzMarkedPosL);
+        zzCharCount = Character.charCount(zzCh);
+        switch (zzCh) {
+        case '\u000B':  // fall through
+        case '\u000C':  // fall through
+        case '\u0085':  // fall through
+        case '\u2028':  // fall through
+        case '\u2029':
+          yyline++;
+          yycolumn = 0;
+          zzR = false;
+          break;
+        case '\r':
+          yyline++;
+          yycolumn = 0;
+          zzR = true;
+          break;
+        case '\n':
+          if (zzR)
+            zzR = false;
+          else {
+            yyline++;
+            yycolumn = 0;
+          }
+          break;
+        default:
+          zzR = false;
+          yycolumn += zzCharCount;
+        }
+      }
+
+      if (zzR) {
+        // peek one character ahead if it is
+        // (if we have counted one line too much)
+        boolean zzPeek;
+        if (zzMarkedPosL < zzEndReadL)
+          zzPeek = zzBufferL[zzMarkedPosL] == '\n';
+        else if (zzAtEOF)
+          zzPeek = false;
+        else {
+          boolean eof = zzRefill();
+          zzEndReadL = zzEndRead;
+          zzMarkedPosL = zzMarkedPos;
+          zzBufferL = zzBuffer;
+          if (eof)
+            zzPeek = false;
+          else
+            zzPeek = zzBufferL[zzMarkedPosL] == '\n';
+        }
+        if (zzPeek) yyline--;
+      }
       zzAction = -1;
 
       zzCurrentPosL = zzCurrentPos = zzStartRead = zzMarkedPosL;
@@ -621,99 +754,201 @@ class Yylex {
 
       if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
         zzAtEOF = true;
-        return YYEOF;
+            zzDoEOF();
+              {
+                return createSymbol(Sym.EOF);
+              }
       }
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
-            { System.out.print(yytext());
+            { defineError(yyline + 1, yycolumn + 1, "Caractere inválido ou inesperado '" + yytext() + "'");
+                        return createSymbol(Sym.error);
             }
           // fall through
-          case 4: break;
+          case 38: break;
           case 2:
-            { System.out.println("<NUMBER>");
+            { /* ignorar */
             }
           // fall through
-          case 5: break;
+          case 39: break;
           case 3:
-            { System.out.println("<SYMBOL>");
+            { return createSymbol(Sym.KEY);
             }
           // fall through
-          case 6: break;
+          case 40: break;
+          case 4:
+            { return createSymbol(Sym.INT);
+            }
+          // fall through
+          case 41: break;
+          case 5:
+            { return createSymbol(Sym.DECI);
+            }
+          // fall through
+          case 42: break;
+          case 6:
+            { return createSymbol(Sym.PAR_OPEN);
+            }
+          // fall through
+          case 43: break;
+          case 7:
+            { return createSymbol(Sym.PAR_CLOSE);
+            }
+          // fall through
+          case 44: break;
+          case 8:
+            { return createSymbol(Sym.BOO);
+            }
+          // fall through
+          case 45: break;
+          case 9:
+            { return createSymbol(Sym.STR);
+            }
+          // fall through
+          case 46: break;
+          case 10:
+            { return createSymbol(Sym.ID, yytext());
+            }
+          // fall through
+          case 47: break;
+          case 11:
+            { return createSymbol(Sym.KEY_OPEN);
+            }
+          // fall through
+          case 48: break;
+          case 12:
+            { return createSymbol(Sym.KEY_CLOSE);
+            }
+          // fall through
+          case 49: break;
+          case 13:
+            { return createSymbol(Sym.NULL);
+            }
+          // fall through
+          case 50: break;
+          case 14:
+            { return createSymbol(Sym.NOT);
+            }
+          // fall through
+          case 51: break;
+          case 15:
+            { return createSymbol(Sym.DIF);
+            }
+          // fall through
+          case 52: break;
+          case 16:
+            { return createSymbol(Sym.TEXT, yytext());
+            }
+          // fall through
+          case 53: break;
+          case 17:
+            { return createSymbol(Sym.PRINT);
+            }
+          // fall through
+          case 54: break;
+          case 18:
+            { return createSymbol(Sym.RESTO);
+            }
+          // fall through
+          case 55: break;
+          case 19:
+            { return createSymbol(Sym.AND);
+            }
+          // fall through
+          case 56: break;
+          case 20:
+            { return createSymbol(Sym.MULT);
+            }
+          // fall through
+          case 57: break;
+          case 21:
+            { return createSymbol(Sym.SOMA);
+            }
+          // fall through
+          case 58: break;
+          case 22:
+            { return createSymbol(Sym.SUB);
+            }
+          // fall through
+          case 59: break;
+          case 23:
+            { return createSymbol(Sym.DIV);
+            }
+          // fall through
+          case 60: break;
+          case 24:
+            { return createSymbol(Sym.ELSE);
+            }
+          // fall through
+          case 61: break;
+          case 25:
+            { return createSymbol(Sym.setaE);
+            }
+          // fall through
+          case 62: break;
+          case 26:
+            { return createSymbol(Sym.MENOR);
+            }
+          // fall through
+          case 63: break;
+          case 27:
+            { return createSymbol(Sym.MENOR_IGUAL);
+            }
+          // fall through
+          case 64: break;
+          case 28:
+            { return createSymbol(Sym.IGUAL);
+            }
+          // fall through
+          case 65: break;
+          case 29:
+            { return createSymbol(Sym.MAIOR_IGUAL);
+            }
+          // fall through
+          case 66: break;
+          case 30:
+            { return createSymbol(Sym.MAIOR);
+            }
+          // fall through
+          case 67: break;
+          case 31:
+            { return createSymbol(Sym.IF);
+            }
+          // fall through
+          case 68: break;
+          case 32:
+            { return createSymbol(Sym.OR);
+            }
+          // fall through
+          case 69: break;
+          case 33:
+            { return createSymbol(Sym.LET);
+            }
+          // fall through
+          case 70: break;
+          case 34:
+            { return createSymbol(Sym.TRUE);
+            }
+          // fall through
+          case 71: break;
+          case 35:
+            { return createSymbol(Sym.CLOSE);
+            }
+          // fall through
+          case 72: break;
+          case 36:
+            { return createSymbol(Sym.FALSE);
+            }
+          // fall through
+          case 73: break;
+          case 37:
+            { return createSymbol(Sym.LEDGER);
+            }
+          // fall through
+          case 74: break;
           default:
             zzScanError(ZZ_NO_MATCH);
-        }
-      }
-    }
-  }
-
-  /**
-   * Runs the scanner on input files.
-   *
-   * This is a standalone scanner, it will print any unmatched
-   * text to System.out unchanged.
-   *
-   * @param argv   the command line, contains the filenames to run
-   *               the scanner on.
-   */
-  public static void main(String[] argv) {
-    if (argv.length == 0) {
-      System.out.println("Usage : java Yylex [ --encoding <name> ] <inputfile(s)>");
-    }
-    else {
-      int firstFilePos = 0;
-      String encodingName = "UTF-8";
-      if (argv[0].equals("--encoding")) {
-        firstFilePos = 2;
-        encodingName = argv[1];
-        try {
-          // Side-effect: is encodingName valid?
-          java.nio.charset.Charset.forName(encodingName);
-        } catch (Exception e) {
-          System.out.println("Invalid encoding '" + encodingName + "'");
-          return;
-        }
-      }
-      for (int i = firstFilePos; i < argv.length; i++) {
-        Yylex scanner = null;
-        java.io.FileInputStream stream = null;
-        java.io.Reader reader = null;
-        try {
-          stream = new java.io.FileInputStream(argv[i]);
-          reader = new java.io.InputStreamReader(stream, encodingName);
-          scanner = new Yylex(reader);
-          while ( !scanner.zzAtEOF ) scanner.yylex();
-        }
-        catch (java.io.FileNotFoundException e) {
-          System.out.println("File not found : \""+argv[i]+"\"");
-        }
-        catch (java.io.IOException e) {
-          System.out.println("IO error scanning file \""+argv[i]+"\"");
-          System.out.println(e);
-        }
-        catch (Exception e) {
-          System.out.println("Unexpected exception:");
-          e.printStackTrace();
-        }
-        finally {
-          if (reader != null) {
-            try {
-              reader.close();
-            }
-            catch (java.io.IOException e) {
-              System.out.println("IO error closing file \""+argv[i]+"\"");
-              System.out.println(e);
-            }
-          }
-          if (stream != null) {
-            try {
-              stream.close();
-            }
-            catch (java.io.IOException e) {
-              System.out.println("IO error closing file \""+argv[i]+"\"");
-              System.out.println(e);
-            }
-          }
         }
       }
     }
