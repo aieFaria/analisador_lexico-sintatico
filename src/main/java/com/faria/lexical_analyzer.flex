@@ -1,25 +1,104 @@
 package com.faria;
 
 import java_cup.runtime.Symbol;
-import java_cup.runtime.ComplexSymbolFactory;
- 
-%% 
- 
-%cup 
-%unicode 
-%line 
-%column 
-%{
-    // Trecho de código qualquer
-}%
-
-letra = [a-zA-Zí]
-digito = [0-9]
-palavra = {letra}+
-numero = {digito}+
 
 %%
 
-{numero}    {System.out.println("<NUMBER>");}
-{palavra}   {System.out.println("<SYMBOL>");}
-<<EOF>>     {return createSymbol(Sym.EOF);}
+%cup
+%unicode
+%line
+%column
+%public
+%class Yylex
+
+%{
+    // Métodos para encapsular a criação de objetos Symbol do JCup
+    private Symbol createSymbol(int type) {
+        return new Symbol(type, yyline + 1, yycolumn + 1);
+    }
+
+    private Symbol createSymbol(int type, Object value) {
+        return new Symbol(type, yyline + 1, yycolumn + 1, value);
+    }
+
+    // Sistema de Log de Erros exigido pelo professor Gomide
+    public void defineError(int line, int column, String text) {
+        System.err.println("Erro Léxico [Linha " + line + ", Coluna " + column + "]: " + text);
+        // Observação: Aqui no futuro você conectará o seu INSERT do banco de dados (tabela errorlog)
+    }
+%}
+
+/* Definições de Padrões Regulares */
+letra  = [a-zA-Z]
+digito = [0-9]
+espaco = [ \t\r\n]+
+
+/* Identificadores e Literais */
+id     = {letra}({letra}|{digito})*
+texto  = \'[^\']*\' | \"[^\"]*\"
+
+%%
+
+<YYINITIAL> {
+    /* Estrutura Principal da Linguagem */
+    "LEDGER"        { return createSymbol(Sym.LEDGER); }
+    "CLOSE"         { return createSymbol(Sym.CLOSE); }
+    "LET"           { return createSymbol(Sym.LET); }
+    "$>"            { return createSymbol(Sym.PRINT); }
+
+    /* Palavras-Chave e Condicionais */
+    "IF"            { return createSymbol(Sym.IF); }
+    "::"            { return createSymbol(Sym.ELSE); }
+    "TRUE"          { return createSymbol(Sym.TRUE); }
+    "FALSE"         { return createSymbol(Sym.FALSE); }
+
+    /* Símbolos de Tipagem (Separados para bater com a GLC do Parser) */
+    "$"             { return createSymbol(Sym.DECI); }
+    "#"             { return createSymbol(Sym.INT); }
+    "@"             { return createSymbol(Sym.STR); }
+    "?"             { return createSymbol(Sym.BOO); }
+    "!"             { return createSymbol(Sym.KEY); }
+    "~"             { return createSymbol(Sym.NULL); }
+
+    /* Delimitadores e Agrupadores */
+    "{"             { return createSymbol(Sym.KEY_OPEN); }
+    "}"             { return createSymbol(Sym.KEY_CLOSE); }
+    "("             { return createSymbol(Sym.PAR_OPEN); }
+    ")"             { return createSymbol(Sym.PAR_CLOSE); }
+
+    /* Operador de Atribuição */
+    "<-"            { return createSymbol(Sym.setaE); }
+
+    /* Operadores Aritméticos */
+    "++"            { return createSymbol(Sym.SOMA); }
+    "--"            { return createSymbol(Sym.SUB); }
+    "**"            { return createSymbol(Sym.MULT); }
+    "//"            { return createSymbol(Sym.DIV); }
+    "%%"            { return createSymbol(Sym.RESTO); }
+
+    /* Operadores Relacionais e Lógicos */
+    "=="            { return createSymbol(Sym.IGUAL); }
+    "!="            { return createSymbol(Sym.DIF); }
+    ">>"            { return createSymbol(Sym.MAIOR); }
+    "<<"            { return createSymbol(Sym.MENOR); }
+    ">="            { return createSymbol(Sym.MAIOR_IGUAL); }
+    "<="            { return createSymbol(Sym.MENOR_IGUAL); }
+    "&&"            { return createSymbol(Sym.AND); }
+    "||"            { return createSymbol(Sym.OR); }
+    "!!"            { return createSymbol(Sym.NOT); }
+
+    /* Identificadores e Strings (Retornando o lexema via String) */
+    {id}            { return createSymbol(Sym.ID, yytext()); }
+    {texto}         { return createSymbol(Sym.TEXT, yytext()); }
+
+    /* Espaços em branco são ignorados pelo Scanner */
+    {espaco}        { /* ignorar */ }
+
+    /* Regra Fallback: Captura caracteres inválidos e aciona o log de erros */
+    .               { 
+                        defineError(yyline + 1, yycolumn + 1, "Caractere inválido ou inesperado '" + yytext() + "'");
+                        return createSymbol(Sym.error); 
+                    }
+}
+
+<<EOF>>             { return createSymbol(Sym.EOF); }
