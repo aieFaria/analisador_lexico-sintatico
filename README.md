@@ -181,7 +181,12 @@ Compile o Yylex.java para gerar o Yylex.class que lê um arquivo de entrada.txt 
 </p>
 
 ### JCup
-aaa
+O JCup é uma ferramenta geradora de analisadores sintáticos (parsers) para a linguagem Java.  
+A partir de regras de gramática definidas pelo usuário, ele escreve automaticamente o código em Java responsável por verificar a estrutura hierárquica do código-fonte.  
+Um analisador sintático pega os tokens gerados pelo analisador lexico e verifica se eles estão organizados na ordem correta, formando sentenças válidas da linguagem.  
+<p align="center">
+  <img width="481" height="40" alt="image" src="https://github.com/user-attachments/assets/ad3e0216-77fe-430f-9e1c-f5e6d07ada07" />
+</p>
 
 ### Gramática Livre De Contexto:
 <p align="center">
