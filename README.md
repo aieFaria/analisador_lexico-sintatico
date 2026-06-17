@@ -164,6 +164,25 @@ p, li { font-size: 30px;
 }
 section { padding: 30px 20px 30px 20px;}
 </style>
+
+
+### JFlex
+
+O JFlex é um gerador de analisador léxico que recebe um conjunto de regras escrito em expressões regulares e tokeniza um arquivo de texto de entrada de acordo com essas expressões.
+<p align="center">
+<img width="348" height="200" alt="image" src="https://github.com/user-attachments/assets/e2245436-062a-46ef-afc7-4b59acb98b5d" />
+</p>
+
+O analisador léxico é criado em um arquivo com a extensão .flex.  
+Ao compilar o arquivo.flex, será gerado um arquivo chamado Yylex.java.  
+Compile o Yylex.java para gerar o Yylex.class que lê um arquivo de entrada.txt e tokeniza em um arquivo de saida.txt.  
+<p align="center">
+  <img width="319" height="280" alt="image" src="https://github.com/user-attachments/assets/6c3c1150-43c6-4876-9b4a-bc8542929ec5" />
+</p>
+
+### JCup
+aaa
+
 ### Gramática Livre De Contexto:
 <p align="center">
 <img width="760" height="605" alt="image" src="https://github.com/user-attachments/assets/4de8d9bb-fb62-4780-acc8-60f88b6d0b7d" />
