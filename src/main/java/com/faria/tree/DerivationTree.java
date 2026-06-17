@@ -3,7 +3,6 @@ package com.faria.tree;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import guru.nidi.graphviz.engine.Graphviz;
@@ -12,6 +11,13 @@ import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.parse.Parser;
 import java.io.File;
 import java.io.IOException;
+
+/**
+ * Representação da arvore de derivação
+ * 
+ * Aqui é criada notação Dot da arvore, partindo de um nó de referencia (a raiz).
+ * 6 Construtores diferentes para atender a todas as possibilidades presentes no Jcup
+*/
 
 public class DerivationTree {
 
@@ -72,7 +78,7 @@ public class DerivationTree {
         StringBuilder sb = new StringBuilder();
 
         sb.append("digraph ArvoreDerivacao {\n");
-        sb.append("    rankdir=LR;\n    dpi=\"600\";");
+        sb.append("    dpi=\"600\";");
         sb.append("    node [shape=plaintext];\n");
         sb.append("    edge [dir=none];\n\n");
 

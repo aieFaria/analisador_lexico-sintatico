@@ -63,6 +63,7 @@ section { padding: 30px 20px 30px 20px;}
 | Draw.io | Para geração dos diagramas |
 
 
+<!--
 
 ---
 
@@ -79,19 +80,19 @@ section { padding: 30px 20px 30px 20px;}
 ### Gerais:
 - [✔️] - Gerar Jflex;
 - [✔️] - Gerar JCup;
-- [❌] - Criar apresentação;
+- [🔘] - Criar apresentação;
 
 ### Especificos:
 - [✔️] (1,0 pontos) ter a gramática livre de contexto para validar as instruções do PIX
 Script (Gabriel);
-     - [❌] Sub tarefa: Criar GLC visual normal para inserir no slide (Railson);
+     - [✔️] Sub tarefa: Criar GLC visual normal para inserir no slide (Railson);
 - [❌] (1,0 pontos) ter as regras do analisador léxico para validar e gerar os tokens;
 - [❌] (1,0 pontos) criar um sistema de log de erros;
 - [🔘] (1,5 pontos) gerar a tabela de símbolos e gravar no banco de dados. Lembrando
 que os lexemas gerados não podem se repetir na tabela de símbolos;
 - [❌] (1,5 pontos) a partir do log de erros gravar no banco de dados;
-- [❌] (2,0 pontos) gerar a árvore de derivação do código;
-- [❌] (2,0 pontos) gere uma imagem apresentando a árvore de derivação. Sugestão:
+- [✔️] (2,0 pontos) gerar a árvore de derivação do código;
+- [✔️] (2,0 pontos) gere uma imagem apresentando a árvore de derivação. Sugestão:
 você pode gerar essa imagem usando a biblioteca Graphviz. 
 
 
@@ -100,6 +101,8 @@ você pode gerar essa imagem usando a biblioteca Graphviz.
 > 🔘 - Em andamento
 
 > ❌ - Não iniciado
+-->
+
 ---
 
 <style scoped>
@@ -272,15 +275,34 @@ section { padding: 30px 20px 30px 20px;}
 
 
 ---
+<style scoped>
+h3 { font-size: 40px; text-align: left }
+p, li { font-size: 35px; 
+        text-align: justify;
+}
+section { padding: 30px 20px 30px 20px;}
+</style>
 
-### 2. 📚 Principais Classes
-Descreve o funcionamento das principais classes do projeto.
+### 2. 📚 JFlex - Análise Léxica
+Mostrar as regras do analisador léxico para validar e gerar os tokens;
 
+![](resource/jflex1.png)
 
+---
+
+<style scoped>
+h3 { font-size: 40px; text-align: left }
+p, li { font-size: 35px; 
+        text-align: justify;
+}
+section { padding: 30px 20px 30px 20px;}
+</style>
 
 ### 3. 🎲 Banco de Dados
 
-Inserir diagramas de representação do banco de dados
+Modelo Lógico:
+
+INSERIR MODELO LÓGICO (AINDA PRECISA GERAR, usar classe Database como base)
 
 
 ---

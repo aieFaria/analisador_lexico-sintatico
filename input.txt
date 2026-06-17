@@ -3,6 +3,7 @@ LEDGER transferencia
  LET @produto <- 'Placa Nvidia 5070RTX'
  LET $valor <- 4999.99
  LET !pix <- "soinformatica@gmail.com"
+ LET ?transfere <- ($dimdim >> 500.00 && !chave == "527.483.916-04")
  IF (!pix != "") {
  $> 'Realizar transferência'
  }

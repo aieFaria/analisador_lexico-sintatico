@@ -5,9 +5,6 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 import com.faria.tree.DerivationTree;
-
-import java_cup.runtime.ComplexSymbolFactory;
-// Removido o import do ComplexSymbolFactory
 import java_cup.runtime.Symbol;
 
 public class Main {
@@ -18,11 +15,9 @@ public class Main {
         FileReader fileReader = new FileReader(rootPath + "/input.txt");
 
         System.out.println("*".repeat(20) + " RESULTADO " + "*".repeat(20));
-        
-        ComplexSymbolFactory sf = new ComplexSymbolFactory();
 
-        Yylex scanner = new Yylex(fileReader, sf); 
-        Parser parser = new Parser(scanner, sf); 
+        Yylex scanner = new Yylex(fileReader); 
+        Parser parser = new Parser(scanner); 
         
         try { 
             // O parser vai consumir os tokens automaticamente
@@ -31,16 +26,16 @@ public class Main {
             System.out.println("\nSintaxe correta! O Parse foi concluído com sucesso."); 
             
             // Geração da Árvore de Derivação (Graphviz)
-            // if(result.value instanceof DerivationTree) {
-            //     DerivationTree root = (DerivationTree) result.value;
-            //     // Remova os comentários abaixo para imprimir a árvore no console!
-            //     // System.out.println("\n--- Código Graphviz (DOT) ---");
-            //     // System.out.println(root.toDot()); 
-            // }
+            if(result.value instanceof DerivationTree) {
+                DerivationTree root = (DerivationTree) result.value;
+                // Remova os comentários abaixo para imprimir a árvore no console!
+                // System.out.println("\n--- Código Graphviz (DOT) ---");
+                root.dotNotation();
+            }
             
         } catch (Exception e) { 
             System.out.println("\nErro Fatal: " + e.getMessage()); 
-            e.printStackTrace(); // Adicionado para mostrar a linha exata do erro, se houver
+            //e.printStackTrace(); // Adicionado para mostrar a linha exata do erro, se houver
         } finally {
             fileReader.close();
         }

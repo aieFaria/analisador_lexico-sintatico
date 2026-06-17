@@ -14,16 +14,12 @@ parser code {:
         Yylex scanner = (Yylex) this.getScanner(); 
         scanner.defineError(line, column, text); 
     } 
- 
-    public void defineError(int linha, int coluna) {    
+
+    public void defineError(int line, int column) {
         Yylex scanner = (Yylex) this.getScanner(); 
-        //scanner.defineError(linha, coluna); 
-    } 
- 
-    public void defineError(String text) { 
-        Yylex scanner = (Yylex) this.getScanner(); 
-      //  scanner.defineError(text); 
-    } 
+        scanner.defineError(line, column);
+    }
+  
 :}; 
 
 terminal String TEXT, NUMBER;
@@ -74,7 +70,7 @@ cmdSaida ::= PRINT TEXT:s {:
                     // syntax_error(s);
                 }
                List<DerivationTree> lista = new ArrayList<>();
-               lista.add( new DerivationTree("PRINT") );
+               lista.add( new DerivationTree("PRINT", "$>") );
                lista.add( new DerivationTree("TEXT", s) );
 
                RESULT = new DerivationTree("cmdSaida", lista);
@@ -92,7 +88,7 @@ declaration ::= LET tipo:p ID:id {:
     lista.add( new DerivationTree("LET") );
     lista.add( p );
     lista.add( new DerivationTree("ID", id) );
-    lista.add( new DerivationTree("setaE") );
+    lista.add( new DerivationTree("setaE", "<-") );
     lista.add( v );
 
     RESULT = new DerivationTree("declaration", lista);
@@ -102,24 +98,24 @@ atrib ::= tipo:p ID:id setaE values:v {:
     List<DerivationTree> lista = new ArrayList<>();
     lista.add( p );
     lista.add( new DerivationTree("ID", id) );
-    lista.add( new DerivationTree("setaE") );
+    lista.add( new DerivationTree("setaE", "<-") );
     lista.add( v );
 
     RESULT = new DerivationTree("atrib", lista);
 :};
 
 tipo ::= DECI {:
-    RESULT = new DerivationTree("tipo", new DerivationTree("DECI"));
+    RESULT = new DerivationTree("tipo", new DerivationTree("DECI", "$"));
 :} | INT {:
-    RESULT = new DerivationTree("tipo", new DerivationTree("INT"));
+    RESULT = new DerivationTree("tipo", new DerivationTree("INT", "#"));
 :} | STR {:
-    RESULT = new DerivationTree("tipo", new DerivationTree("STR"));
+    RESULT = new DerivationTree("tipo", new DerivationTree("STR", "@"));
 :} | BOO {:
-    RESULT = new DerivationTree("tipo", new DerivationTree("BOO"));
+    RESULT = new DerivationTree("tipo", new DerivationTree("BOO", "?"));
 :} | KEY {:
-    RESULT = new DerivationTree("tipo", new DerivationTree("KEY"));
+    RESULT = new DerivationTree("tipo", new DerivationTree("KEY", "!"));
 :} | NULL {:
-    RESULT = new DerivationTree("tipo", new DerivationTree("NULL"));
+    RESULT = new DerivationTree("tipo", new DerivationTree("NULL", "~"));
 :};
 
 values ::= OPR:o {:
@@ -155,14 +151,14 @@ exprNum ::= exprNum:en OPR_ARITME:o term:t {:
 
 term ::= PAR_OPEN expr:ex PAR_CLOSE {:
     List<DerivationTree> lista = new ArrayList<>();
-    lista.add( new DerivationTree("PAR_OPEN") );
+    lista.add( new DerivationTree("PAR_OPEN", "(") );
     lista.add( ex );
 
-    lista.add( new DerivationTree("PAR_CLOSE") );
+    lista.add( new DerivationTree("PAR_CLOSE", ")") );
     RESULT = new DerivationTree("term", lista);
 :} | NOT term:tm {:
     List<DerivationTree> lista = new ArrayList<>();
-    lista.add( new DerivationTree("NOT") );
+    lista.add( new DerivationTree("NOT", "!!") );
     lista.add( tm );
 
     RESULT = new DerivationTree("term", lista);
@@ -183,44 +179,44 @@ term ::= PAR_OPEN expr:ex PAR_CLOSE {:
 :};
 
 OPR_ARITME ::= SOMA {:
-    RESULT = new DerivationTree("OPR_ARITME", Arrays.asList( new DerivationTree("SOMA") ));
+    RESULT = new DerivationTree("OPR_ARITME", new DerivationTree("SOMA", "++") );
 :} | SUB {:
-    RESULT = new DerivationTree("OPR_ARITME", Arrays.asList( new DerivationTree("SUB") ));
+    RESULT = new DerivationTree("OPR_ARITME", new DerivationTree("SUB", "--") );
 :} | DIV {:
-    RESULT = new DerivationTree("OPR_ARITME", Arrays.asList( new DerivationTree("DIV") ));
+    RESULT = new DerivationTree("OPR_ARITME", new DerivationTree("DIV", "//") );
 :} | RESTO {:
-    RESULT = new DerivationTree("OPR_ARITME", Arrays.asList( new DerivationTree("RESTO") ));
+    RESULT = new DerivationTree("OPR_ARITME", new DerivationTree("RESTO", "%%") );
 :} | MULT {:
-    RESULT = new DerivationTree("OPR_ARITME", Arrays.asList( new DerivationTree("MULT") ));
+    RESULT = new DerivationTree("OPR_ARITME", new DerivationTree("MULT", "**") );
 :};
 
 OPR_COMP ::= OR {:
-    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("OR"));
+    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("OR", "||"));
 :} | AND {:
-    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("AND"));
+    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("AND", "&&"));
 :} | IGUAL {:
-    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("IGUAL"));
+    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("IGUAL", "=="));
 :} | DIF {:
-    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("DIF"));
+    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("DIF", "!="));
 :} | MENOR {:
-    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("MENOR"));
+    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("MENOR", "<<"));
 :} | MAIOR {:
-    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("MAIOR"));
+    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("MAIOR", ">>"));
 :} | MAIOR_IGUAL {:
-    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("MAIOR_IGUAL"));
+    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("MAIOR_IGUAL", ">="));
 :} | MENOR_IGUAL {:
-    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("MENOR_IGUAL"));
+    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("MENOR_IGUAL", "<="));
 :};
 
 cmdIF ::= IF PAR_OPEN OPR:o PAR_CLOSE KEY_OPEN stCommand:cmd KEY_CLOSE cmdElse:se {:
     List<DerivationTree> lista = new ArrayList<>();
     lista.add( new DerivationTree("IF") );
-    lista.add( new DerivationTree("PAR_OPEN") );
+    lista.add( new DerivationTree("PAR_OPEN", "(") );
     lista.add( o );
-    lista.add( new DerivationTree("PAR_CLOSE") );
-    lista.add( new DerivationTree("KEY_OPEN") );
+    lista.add( new DerivationTree("PAR_CLOSE", ")") );
+    lista.add( new DerivationTree("KEY_OPEN", "{") );
     lista.add( cmd );
-    lista.add( new DerivationTree("KEY_CLOSE") );
+    lista.add( new DerivationTree("KEY_CLOSE", "}") );
     lista.add( se );
 
     RESULT = new DerivationTree("cmdIF", lista);
@@ -228,9 +224,9 @@ cmdIF ::= IF PAR_OPEN OPR:o PAR_CLOSE KEY_OPEN stCommand:cmd KEY_CLOSE cmdElse:s
 cmdElse ::= ELSE KEY_OPEN stCommand:cmd KEY_CLOSE {:
     List<DerivationTree> lista = new ArrayList<>();
     lista.add( new DerivationTree("ELSE") );
-    lista.add( new DerivationTree("KEY_OPEN") );
+    lista.add( new DerivationTree("KEY_OPEN", "{") );
     lista.add( cmd );
-    lista.add( new DerivationTree("KEY_CLOSE") );
+    lista.add( new DerivationTree("KEY_CLOSE", "}") );
 
     RESULT = new DerivationTree("cmdElse", lista);
 :} | EPSILON {:

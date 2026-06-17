@@ -1,7 +1,7 @@
 package com.faria;
 
 import java_cup.runtime.Symbol;
-import java_cup.runtime.ComplexSymbolFactory;
+import com.faria.Database;
 
 %%
 
@@ -13,17 +13,12 @@ import java_cup.runtime.ComplexSymbolFactory;
 %class Yylex
 
 %{
-    private ComplexSymbolFactory sf;
+    Database db = new Database();
 
     // Métodos para encapsular a criação de objetos Symbol do JCup
     private Symbol createSymbol(int type) {
         return new Symbol(type, yyline + 1, yycolumn + 1);
     }
-
-    public Yylex(java.io.Reader in, ComplexSymbolFactory sf) { 
-        this(in);
-        this.sf = sf;
-    } 
 
     private Symbol createSymbol(int type, Object value) {
         return new Symbol(type, yyline + 1, yycolumn + 1, value);
@@ -33,6 +28,10 @@ import java_cup.runtime.ComplexSymbolFactory;
     public void defineError(int line, int column, String text) {
         System.err.println("Erro Léxico [Linha " + line + ", Coluna " + column + "]: " + text);
         // Observação: Aqui no futuro você conectará o seu INSERT do banco de dados (tabela errorlog)
+    }
+
+    public void defineError(int line, int column) {
+        this.defineError(line, column, "");
     }
 %}
 
@@ -83,7 +82,7 @@ numero = {digito}+("."{digito}+)?
 
 /* Operadores Relacionais e Lógicos */
 "=="            { return createSymbol(Sym.IGUAL); }
-"!="            { System.out.println("Lexer leu: " + yytext()); return createSymbol(Sym.DIF); }
+"!="            { return createSymbol(Sym.DIF); }
 ">>"            { return createSymbol(Sym.MAIOR); }
 "<<"            { return createSymbol(Sym.MENOR); }
 ">="            { return createSymbol(Sym.MAIOR_IGUAL); }
@@ -93,12 +92,12 @@ numero = {digito}+("."{digito}+)?
 "!!"            { return createSymbol(Sym.NOT); }
 
 {numero}        { return createSymbol(Sym.NUMBER, yytext()); }
-{id}            { System.out.println("Lexer leu: " + yytext()); return createSymbol(Sym.ID, yytext()); }
-{texto}         { System.out.println("Lexer leu: " + yytext()); return createSymbol(Sym.TEXT, yytext()); }
+{id}            { return createSymbol(Sym.ID, yytext()); }
+{texto}         { return createSymbol(Sym.TEXT, yytext()); }
 {espaco}        { /* ignorar */ }
 
 .               { 
-                    System.out.println("Lexer leu algo estranho: " + yytext());
+                    System.out.println("Erro Lexico encontrado: " + yytext());
                     defineError(yyline + 1, yycolumn + 1, "Caractere inválido ou inesperado '" + yytext() + "'");
                     return createSymbol(Sym.error); // Não é obrigatório criar esse simbolo
                 }
