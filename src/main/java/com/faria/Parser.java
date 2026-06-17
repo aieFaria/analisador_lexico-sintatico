@@ -6,7 +6,9 @@
 package com.faria;
 
 import java_cup.runtime.*;
-import com.faria.tree.DerivationTree;
+import com.faria.utils.DerivationTree;
+import com.faria.utils.TabelaSimbolos;
+import com.faria.utils.Token;
 import java.util.*;
 import java_cup.runtime.XMLElement;
 
@@ -276,6 +278,28 @@ public class Parser extends java_cup.runtime.lr_parser {
 
 
  
+    TabelaSimbolos tb = new TabelaSimbolos();
+
+    public void inserirSimbolo(int refSym, Object lexemaZ) {
+
+        if(lexemaZ instanceof String){
+
+            String lexema = (String) lexemaZ;
+
+            Token token = new Token(refSym, lexema);
+
+            tb.inserirSimbolo(lexema, token);
+        }
+
+        tb.imprimirTabela();
+    }
+
+    public void inserirSimbolo(int refSym) {
+        Token token = new Token(refSym);
+        String lexema = token.getLexema();
+
+        tb.inserirSimbolo(lexema, token);
+    }
  
     public void syntax_error(Symbol s) {     
         this.defineError(s.left, s.right);    
@@ -328,6 +352,10 @@ class CUP$Parser$actions {
 		int cmdright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		DerivationTree cmd = (DerivationTree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 		
+    inserirSimbolo(Sym.LEDGER);
+    inserirSimbolo(Sym.ID, id);
+    inserirSimbolo(Sym.CLOSE);
+
     List<DerivationTree> lista = new ArrayList<>();
     lista.add( new DerivationTree("LEDGER") );
     lista.add( new DerivationTree("ID", id) );
@@ -454,6 +482,8 @@ class CUP$Parser$actions {
 		int sright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		String s = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
+    inserirSimbolo(Sym.PRINT, "$>");
+
                 if(s instanceof String) {
                     // Sucesso não precisa gerar erro
                 } else {
@@ -481,6 +511,9 @@ class CUP$Parser$actions {
 		int idright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object id = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
+    inserirSimbolo(Sym.LET);
+    inserirSimbolo(Sym.ID, id);
+
     List<DerivationTree> lista = new ArrayList<>();
     lista.add( new DerivationTree("LET") );
     lista.add( p );
@@ -506,6 +539,10 @@ class CUP$Parser$actions {
 		int vright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		DerivationTree v = (DerivationTree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
+    inserirSimbolo(Sym.LET);
+    inserirSimbolo(Sym.ID, id);
+    inserirSimbolo(Sym.setaE);
+    
     List<DerivationTree> lista = new ArrayList<>();
     lista.add( new DerivationTree("LET") );
     lista.add( p );
@@ -533,6 +570,9 @@ class CUP$Parser$actions {
 		int vright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		DerivationTree v = (DerivationTree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
+    inserirSimbolo(Sym.ID, id);
+    inserirSimbolo(Sym.setaE);
+
     List<DerivationTree> lista = new ArrayList<>();
     lista.add( p );
     lista.add( new DerivationTree("ID", id) );
@@ -550,6 +590,8 @@ class CUP$Parser$actions {
             {
               DerivationTree RESULT =null;
 		
+    inserirSimbolo(Sym.DECI);
+
     RESULT = new DerivationTree("tipo", new DerivationTree("DECI", "$"));
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("tipo",8, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -561,6 +603,8 @@ class CUP$Parser$actions {
             {
               DerivationTree RESULT =null;
 		
+    inserirSimbolo(Sym.INT);
+
     RESULT = new DerivationTree("tipo", new DerivationTree("INT", "#"));
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("tipo",8, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -572,6 +616,8 @@ class CUP$Parser$actions {
             {
               DerivationTree RESULT =null;
 		
+    inserirSimbolo(Sym.STR);
+
     RESULT = new DerivationTree("tipo", new DerivationTree("STR", "@"));
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("tipo",8, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -583,6 +629,8 @@ class CUP$Parser$actions {
             {
               DerivationTree RESULT =null;
 		
+    inserirSimbolo(Sym.BOO);
+
     RESULT = new DerivationTree("tipo", new DerivationTree("BOO", "?"));
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("tipo",8, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -594,6 +642,8 @@ class CUP$Parser$actions {
             {
               DerivationTree RESULT =null;
 		
+    inserirSimbolo(Sym.KEY);
+
     RESULT = new DerivationTree("tipo", new DerivationTree("KEY", "!"));
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("tipo",8, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -605,6 +655,8 @@ class CUP$Parser$actions {
             {
               DerivationTree RESULT =null;
 		
+    inserirSimbolo(Sym.NULL);
+
     RESULT = new DerivationTree("tipo", new DerivationTree("NULL", "~"));
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("tipo",8, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -725,11 +777,14 @@ class CUP$Parser$actions {
 		int exright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		DerivationTree ex = (DerivationTree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 		
+    inserirSimbolo(Sym.PAR_OPEN);
+    inserirSimbolo(Sym.PAR_CLOSE);
+
     List<DerivationTree> lista = new ArrayList<>();
     lista.add( new DerivationTree("PAR_OPEN", "(") );
     lista.add( ex );
-
     lista.add( new DerivationTree("PAR_CLOSE", ")") );
+
     RESULT = new DerivationTree("term", lista);
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("term",12, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -744,6 +799,8 @@ class CUP$Parser$actions {
 		int tmright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		DerivationTree tm = (DerivationTree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
+    inserirSimbolo(Sym.NOT);
+
     List<DerivationTree> lista = new ArrayList<>();
     lista.add( new DerivationTree("NOT", "!!") );
     lista.add( tm );
@@ -765,6 +822,8 @@ class CUP$Parser$actions {
 		int idright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object id = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
+    inserirSimbolo(Sym.ID, id);
+
     List<DerivationTree> lista = new ArrayList<>();
     lista.add( p );
 
@@ -783,6 +842,8 @@ class CUP$Parser$actions {
 		int nright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		String n = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
+    inserirSimbolo(Sym.NUMBER, n);
+
     RESULT = new DerivationTree("term", new DerivationTree("NUMBER", n));
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("term",12, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -797,6 +858,8 @@ class CUP$Parser$actions {
 		int tright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		String t = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
+    inserirSimbolo(Sym.TEXT, t);
+
     RESULT = new DerivationTree("term", new DerivationTree("TEXT", t));
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("term",12, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -808,6 +871,8 @@ class CUP$Parser$actions {
             {
               DerivationTree RESULT =null;
 		
+    inserirSimbolo(Sym.TRUE);
+
     RESULT = new DerivationTree("term", new DerivationTree("TRUE"));
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("term",12, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -819,6 +884,8 @@ class CUP$Parser$actions {
             {
               DerivationTree RESULT =null;
 		
+    inserirSimbolo(Sym.FALSE);
+
     RESULT = new DerivationTree("term", new DerivationTree("FALSE"));
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("term",12, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -830,6 +897,8 @@ class CUP$Parser$actions {
             {
               DerivationTree RESULT =null;
 		
+    inserirSimbolo(Sym.SOMA);
+
     RESULT = new DerivationTree("OPR_ARITME", new DerivationTree("SOMA", "++") );
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("OPR_ARITME",13, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -841,6 +910,8 @@ class CUP$Parser$actions {
             {
               DerivationTree RESULT =null;
 		
+    inserirSimbolo(Sym.SUB);
+
     RESULT = new DerivationTree("OPR_ARITME", new DerivationTree("SUB", "--") );
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("OPR_ARITME",13, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -852,6 +923,8 @@ class CUP$Parser$actions {
             {
               DerivationTree RESULT =null;
 		
+    inserirSimbolo(Sym.DIV);
+
     RESULT = new DerivationTree("OPR_ARITME", new DerivationTree("DIV", "//") );
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("OPR_ARITME",13, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -863,6 +936,8 @@ class CUP$Parser$actions {
             {
               DerivationTree RESULT =null;
 		
+    inserirSimbolo(Sym.RESTO);
+
     RESULT = new DerivationTree("OPR_ARITME", new DerivationTree("RESTO", "%%") );
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("OPR_ARITME",13, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -874,6 +949,8 @@ class CUP$Parser$actions {
             {
               DerivationTree RESULT =null;
 		
+    inserirSimbolo(Sym.MULT);
+
     RESULT = new DerivationTree("OPR_ARITME", new DerivationTree("MULT", "**") );
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("OPR_ARITME",13, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -885,6 +962,8 @@ class CUP$Parser$actions {
             {
               DerivationTree RESULT =null;
 		
+    inserirSimbolo(Sym.OR);
+
     RESULT = new DerivationTree("OPR_COMP", new DerivationTree("OR", "||"));
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("OPR_COMP",14, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -896,6 +975,8 @@ class CUP$Parser$actions {
             {
               DerivationTree RESULT =null;
 		
+    inserirSimbolo(Sym.AND);
+
     RESULT = new DerivationTree("OPR_COMP", new DerivationTree("AND", "&&"));
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("OPR_COMP",14, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -907,6 +988,8 @@ class CUP$Parser$actions {
             {
               DerivationTree RESULT =null;
 		
+    inserirSimbolo(Sym.IGUAL);
+
     RESULT = new DerivationTree("OPR_COMP", new DerivationTree("IGUAL", "=="));
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("OPR_COMP",14, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -918,6 +1001,8 @@ class CUP$Parser$actions {
             {
               DerivationTree RESULT =null;
 		
+    inserirSimbolo(Sym.DIF);
+
     RESULT = new DerivationTree("OPR_COMP", new DerivationTree("DIF", "!="));
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("OPR_COMP",14, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -929,6 +1014,8 @@ class CUP$Parser$actions {
             {
               DerivationTree RESULT =null;
 		
+    inserirSimbolo(Sym.MENOR);
+
     RESULT = new DerivationTree("OPR_COMP", new DerivationTree("MENOR", "<<"));
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("OPR_COMP",14, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -940,6 +1027,8 @@ class CUP$Parser$actions {
             {
               DerivationTree RESULT =null;
 		
+    inserirSimbolo(Sym.MAIOR);
+
     RESULT = new DerivationTree("OPR_COMP", new DerivationTree("MAIOR", ">>"));
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("OPR_COMP",14, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -951,6 +1040,8 @@ class CUP$Parser$actions {
             {
               DerivationTree RESULT =null;
 		
+    inserirSimbolo(Sym.MAIOR_IGUAL);
+
     RESULT = new DerivationTree("OPR_COMP", new DerivationTree("MAIOR_IGUAL", ">="));
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("OPR_COMP",14, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -962,6 +1053,8 @@ class CUP$Parser$actions {
             {
               DerivationTree RESULT =null;
 		
+    inserirSimbolo(Sym.MENOR_IGUAL);
+
     RESULT = new DerivationTree("OPR_COMP", new DerivationTree("MENOR_IGUAL", "<="));
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("OPR_COMP",14, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -982,6 +1075,12 @@ class CUP$Parser$actions {
 		int seright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		DerivationTree se = (DerivationTree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
+    inserirSimbolo(Sym.IF);
+    inserirSimbolo(Sym.PAR_OPEN);
+    inserirSimbolo(Sym.PAR_CLOSE);
+    inserirSimbolo(Sym.KEY_OPEN);
+    inserirSimbolo(Sym.KEY_CLOSE);
+
     List<DerivationTree> lista = new ArrayList<>();
     lista.add( new DerivationTree("IF") );
     lista.add( new DerivationTree("PAR_OPEN", "(") );
@@ -1006,6 +1105,10 @@ class CUP$Parser$actions {
 		int cmdright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		DerivationTree cmd = (DerivationTree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 		
+    inserirSimbolo(Sym.ELSE);
+    inserirSimbolo(Sym.KEY_OPEN);
+    inserirSimbolo(Sym.KEY_CLOSE);
+
     List<DerivationTree> lista = new ArrayList<>();
     lista.add( new DerivationTree("ELSE") );
     lista.add( new DerivationTree("KEY_OPEN", "{") );
@@ -1034,6 +1137,7 @@ class CUP$Parser$actions {
             {
               DerivationTree RESULT =null;
 		
+    //inserirSimbolo(Sym.EPSILON);
     // Não fazer nada
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("EPSILON",16, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);

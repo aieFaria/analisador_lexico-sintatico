@@ -4,7 +4,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-import com.faria.tree.DerivationTree;
+import com.faria.utils.DerivationTree;
+
 import java_cup.runtime.Symbol;
 
 public class Main {

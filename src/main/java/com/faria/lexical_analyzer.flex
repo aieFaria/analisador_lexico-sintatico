@@ -1,7 +1,7 @@
 package com.faria;
 
 import java_cup.runtime.Symbol;
-import com.faria.Database;
+import com.faria.utils.Database;
 
 %%
 
@@ -13,6 +13,7 @@ import com.faria.Database;
 %class Yylex
 
 %{
+
     Database db = new Database();
 
     // Métodos para encapsular a criação de objetos Symbol do JCup

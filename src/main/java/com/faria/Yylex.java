@@ -5,7 +5,7 @@
 package com.faria;
 
 import java_cup.runtime.Symbol;
-import java_cup.runtime.ComplexSymbolFactory;
+import com.faria.utils.Database;
 
 
 @SuppressWarnings("fallthrough")
@@ -331,6 +331,10 @@ public class Yylex implements java_cup.runtime.Scanner {
   private boolean zzEOFDone;
 
   /* user code: */
+
+    Database db = new Database();
+    
+    
 
     // Métodos para encapsular a criação de objetos Symbol do JCup
     private Symbol createSymbol(int type) {

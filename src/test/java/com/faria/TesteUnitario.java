@@ -1,10 +1,11 @@
 package com.faria;
 
-import com.faria.tree.DerivationTree;
-
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import com.faria.utils.DerivationTree;
+
 import org.junit.jupiter.api.Nested;
 
 public class TesteUnitario {

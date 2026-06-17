@@ -1,10 +1,34 @@
 package com.faria;
 
 import java_cup.runtime.*;
-import com.faria.tree.DerivationTree;
+import com.faria.utils.DerivationTree;
+import com.faria.utils.TabelaSimbolos;
+import com.faria.utils.Token;
 import java.util.*;
 
 parser code {: 
+    TabelaSimbolos tb = new TabelaSimbolos();
+
+    public void inserirSimbolo(int refSym, Object lexemaZ) {
+
+        if(lexemaZ instanceof String){
+
+            String lexema = (String) lexemaZ;
+
+            Token token = new Token(refSym, lexema);
+
+            tb.inserirSimbolo(lexema, token);
+        }
+
+        tb.imprimirTabela();
+    }
+
+    public void inserirSimbolo(int refSym) {
+        Token token = new Token(refSym);
+        String lexema = token.getLexema();
+
+        tb.inserirSimbolo(lexema, token);
+    }
  
     public void syntax_error(Symbol s) {     
         this.defineError(s.left, s.right);    
@@ -32,6 +56,10 @@ non terminal DerivationTree st, stCommand, command, cmdSaida, declaration, atrib
                             EPSILON;
 
 st ::= LEDGER ID:id stCommand:cmd CLOSE {:
+    inserirSimbolo(Sym.LEDGER);
+    inserirSimbolo(Sym.ID, id);
+    inserirSimbolo(Sym.CLOSE);
+
     List<DerivationTree> lista = new ArrayList<>();
     lista.add( new DerivationTree("LEDGER") );
     lista.add( new DerivationTree("ID", id) );
@@ -63,6 +91,8 @@ command ::= cmdSaida:cs {:
 :};
 
 cmdSaida ::= PRINT TEXT:s {:
+    inserirSimbolo(Sym.PRINT, "$>");
+
                 if(s instanceof String) {
                     // Sucesso não precisa gerar erro
                 } else {
@@ -77,6 +107,9 @@ cmdSaida ::= PRINT TEXT:s {:
             :};
 
 declaration ::= LET tipo:p ID:id {:
+    inserirSimbolo(Sym.LET);
+    inserirSimbolo(Sym.ID, id);
+
     List<DerivationTree> lista = new ArrayList<>();
     lista.add( new DerivationTree("LET") );
     lista.add( p );
@@ -84,6 +117,10 @@ declaration ::= LET tipo:p ID:id {:
 
     RESULT = new DerivationTree("declaration", lista);
 :} | LET tipo:p ID:id setaE values:v {:
+    inserirSimbolo(Sym.LET);
+    inserirSimbolo(Sym.ID, id);
+    inserirSimbolo(Sym.setaE);
+    
     List<DerivationTree> lista = new ArrayList<>();
     lista.add( new DerivationTree("LET") );
     lista.add( p );
@@ -95,6 +132,9 @@ declaration ::= LET tipo:p ID:id {:
 :};
 
 atrib ::= tipo:p ID:id setaE values:v {:
+    inserirSimbolo(Sym.ID, id);
+    inserirSimbolo(Sym.setaE);
+
     List<DerivationTree> lista = new ArrayList<>();
     lista.add( p );
     lista.add( new DerivationTree("ID", id) );
@@ -105,16 +145,28 @@ atrib ::= tipo:p ID:id setaE values:v {:
 :};
 
 tipo ::= DECI {:
+    inserirSimbolo(Sym.DECI);
+
     RESULT = new DerivationTree("tipo", new DerivationTree("DECI", "$"));
 :} | INT {:
+    inserirSimbolo(Sym.INT);
+
     RESULT = new DerivationTree("tipo", new DerivationTree("INT", "#"));
 :} | STR {:
+    inserirSimbolo(Sym.STR);
+
     RESULT = new DerivationTree("tipo", new DerivationTree("STR", "@"));
 :} | BOO {:
+    inserirSimbolo(Sym.BOO);
+
     RESULT = new DerivationTree("tipo", new DerivationTree("BOO", "?"));
 :} | KEY {:
+    inserirSimbolo(Sym.KEY);
+
     RESULT = new DerivationTree("tipo", new DerivationTree("KEY", "!"));
 :} | NULL {:
+    inserirSimbolo(Sym.NULL);
+
     RESULT = new DerivationTree("tipo", new DerivationTree("NULL", "~"));
 :};
 
@@ -150,65 +202,112 @@ exprNum ::= exprNum:en OPR_ARITME:o term:t {:
 
 
 term ::= PAR_OPEN expr:ex PAR_CLOSE {:
+    inserirSimbolo(Sym.PAR_OPEN);
+    inserirSimbolo(Sym.PAR_CLOSE);
+
     List<DerivationTree> lista = new ArrayList<>();
     lista.add( new DerivationTree("PAR_OPEN", "(") );
     lista.add( ex );
-
     lista.add( new DerivationTree("PAR_CLOSE", ")") );
+
     RESULT = new DerivationTree("term", lista);
 :} | NOT term:tm {:
+    inserirSimbolo(Sym.NOT);
+
     List<DerivationTree> lista = new ArrayList<>();
     lista.add( new DerivationTree("NOT", "!!") );
     lista.add( tm );
 
     RESULT = new DerivationTree("term", lista);
 :} | tipo:p ID:id {:
+    inserirSimbolo(Sym.ID, id);
+
     List<DerivationTree> lista = new ArrayList<>();
     lista.add( p );
 
     lista.add( new DerivationTree("ID", id) );
     RESULT = new DerivationTree("term", lista);
 :} | NUMBER:n {:
+    inserirSimbolo(Sym.NUMBER, n);
+
     RESULT = new DerivationTree("term", new DerivationTree("NUMBER", n));
 :} | TEXT:t {:
+    inserirSimbolo(Sym.TEXT, t);
+
     RESULT = new DerivationTree("term", new DerivationTree("TEXT", t));
 :} | TRUE {:
+    inserirSimbolo(Sym.TRUE);
+
     RESULT = new DerivationTree("term", new DerivationTree("TRUE"));
 :} | FALSE {:
+    inserirSimbolo(Sym.FALSE);
+
     RESULT = new DerivationTree("term", new DerivationTree("FALSE"));
 :};
 
 OPR_ARITME ::= SOMA {:
+    inserirSimbolo(Sym.SOMA);
+
     RESULT = new DerivationTree("OPR_ARITME", new DerivationTree("SOMA", "++") );
 :} | SUB {:
+    inserirSimbolo(Sym.SUB);
+
     RESULT = new DerivationTree("OPR_ARITME", new DerivationTree("SUB", "--") );
 :} | DIV {:
+    inserirSimbolo(Sym.DIV);
+
     RESULT = new DerivationTree("OPR_ARITME", new DerivationTree("DIV", "//") );
 :} | RESTO {:
+    inserirSimbolo(Sym.RESTO);
+
     RESULT = new DerivationTree("OPR_ARITME", new DerivationTree("RESTO", "%%") );
 :} | MULT {:
+    inserirSimbolo(Sym.MULT);
+
     RESULT = new DerivationTree("OPR_ARITME", new DerivationTree("MULT", "**") );
 :};
 
 OPR_COMP ::= OR {:
+    inserirSimbolo(Sym.OR);
+
     RESULT = new DerivationTree("OPR_COMP", new DerivationTree("OR", "||"));
 :} | AND {:
+    inserirSimbolo(Sym.AND);
+
     RESULT = new DerivationTree("OPR_COMP", new DerivationTree("AND", "&&"));
 :} | IGUAL {:
+    inserirSimbolo(Sym.IGUAL);
+
     RESULT = new DerivationTree("OPR_COMP", new DerivationTree("IGUAL", "=="));
 :} | DIF {:
+    inserirSimbolo(Sym.DIF);
+
     RESULT = new DerivationTree("OPR_COMP", new DerivationTree("DIF", "!="));
 :} | MENOR {:
+    inserirSimbolo(Sym.MENOR);
+
     RESULT = new DerivationTree("OPR_COMP", new DerivationTree("MENOR", "<<"));
 :} | MAIOR {:
+    inserirSimbolo(Sym.MAIOR);
+
     RESULT = new DerivationTree("OPR_COMP", new DerivationTree("MAIOR", ">>"));
 :} | MAIOR_IGUAL {:
+    inserirSimbolo(Sym.MAIOR_IGUAL);
+
     RESULT = new DerivationTree("OPR_COMP", new DerivationTree("MAIOR_IGUAL", ">="));
 :} | MENOR_IGUAL {:
+    inserirSimbolo(Sym.MENOR_IGUAL);
+
     RESULT = new DerivationTree("OPR_COMP", new DerivationTree("MENOR_IGUAL", "<="));
 :};
 
 cmdIF ::= IF PAR_OPEN OPR:o PAR_CLOSE KEY_OPEN stCommand:cmd KEY_CLOSE cmdElse:se {:
+    inserirSimbolo(Sym.IF);
+    inserirSimbolo(Sym.PAR_OPEN);
+    inserirSimbolo(Sym.PAR_CLOSE);
+    inserirSimbolo(Sym.KEY_OPEN);
+    inserirSimbolo(Sym.KEY_CLOSE);
+
     List<DerivationTree> lista = new ArrayList<>();
     lista.add( new DerivationTree("IF") );
     lista.add( new DerivationTree("PAR_OPEN", "(") );
@@ -222,6 +321,10 @@ cmdIF ::= IF PAR_OPEN OPR:o PAR_CLOSE KEY_OPEN stCommand:cmd KEY_CLOSE cmdElse:s
     RESULT = new DerivationTree("cmdIF", lista);
 :};
 cmdElse ::= ELSE KEY_OPEN stCommand:cmd KEY_CLOSE {:
+    inserirSimbolo(Sym.ELSE);
+    inserirSimbolo(Sym.KEY_OPEN);
+    inserirSimbolo(Sym.KEY_CLOSE);
+
     List<DerivationTree> lista = new ArrayList<>();
     lista.add( new DerivationTree("ELSE") );
     lista.add( new DerivationTree("KEY_OPEN", "{") );
@@ -235,5 +338,7 @@ cmdElse ::= ELSE KEY_OPEN stCommand:cmd KEY_CLOSE {:
 
 
 EPSILON ::= {:
+    //inserirSimbolo(Sym.EPSILON);
     // Não fazer nada
 :};
+
