@@ -152,48 +152,133 @@ section { padding: 30px 20px 30px 20px;}
 
 ## 👷 Desenvolvimento
 
-### 1. 📚 Principais Classes
-Descreve o funcionamento das principais classes do projeto.
-
 ---
 
 <style scoped>
 h3 { font-size: 40px; text-align: left }
-p, li { font-size: 30px; 
+p, li { font-size: 35px; 
         text-align: justify;
 }
 section { padding: 30px 20px 30px 20px;}
 </style>
 
 
-### JFlex
+### 1. ✏️ Gramática Livre De Contexto:
 
-O JFlex é um gerador de analisador léxico que recebe um conjunto de regras escrito em expressões regulares e tokeniza um arquivo de texto de entrada de acordo com essas expressões.
-<p align="center">
-<img width="348" height="200" alt="image" src="https://github.com/user-attachments/assets/e2245436-062a-46ef-afc7-4b59acb98b5d" />
-</p>
+G = (V, T, P, S), onde:
+- V (**Não-Terminais**) = { st, stCommand, command, cmdSaida, declaration, atrib, cmdIF, values, tipo, OPR, expr, exprNum, term, OPR_ARITME, OPR_COMP, cmdElse, EPSILON };
+- T (**Terminais**) = { TEXT, NUMBER, LEDGER, CLOSE, PAR_OPEN, PAR_CLOSE, PRINT, ID, LET, setaE, KEY_OPEN, KEY_CLOSE, SOMA, SUB, MULT, DIV, RESTO, NOT, DECI, INT, STR, BOO, KEY, NULL, TRUE, FALSE, OR, AND, IGUAL, DIF, MAIOR, MENOR, MAIOR_IGUAL, MENOR_IGUAL, IF, ELSE; };
+- S (**Simbolo inicial**) = st;
+- P (Produções)
 
-O analisador léxico é criado em um arquivo com a extensão .flex.  
-Ao compilar o arquivo.flex, será gerado um arquivo chamado Yylex.java.  
-Compile o Yylex.java para gerar o Yylex.class que lê um arquivo de entrada.txt e tokeniza em um arquivo de saida.txt.  
-<p align="center">
-  <img width="319" height="280" alt="image" src="https://github.com/user-attachments/assets/6c3c1150-43c6-4876-9b4a-bc8542929ec5" />
-</p>
+---
 
-### JCup
-O JCup é uma ferramenta geradora de analisadores sintáticos (parsers) para a linguagem Java.  
-A partir de regras de gramática definidas pelo usuário, ele escreve automaticamente o código em Java responsável por verificar a estrutura hierárquica do código-fonte.  
-Um analisador sintático pega os tokens gerados pelo analisador lexico e verifica se eles estão organizados na ordem correta, formando sentenças válidas da linguagem.  
-<p align="center">
-  <img width="481" height="40" alt="image" src="https://github.com/user-attachments/assets/ad3e0216-77fe-430f-9e1c-f5e6d07ada07" />
-</p>
+<style scoped>
+h4 { font-size: 40px; text-align: left }
+p, li { font-size: 30px; 
+        text-align: justify;
+}
+table {
+  font-size: 40px;
+}
+section { padding: 30px 20px 30px 20px;}
+</style>
 
-### Gramática Livre De Contexto:
-<p align="center">
-<img width="760" height="605" alt="image" src="https://github.com/user-attachments/assets/4de8d9bb-fb62-4780-acc8-60f88b6d0b7d" />
-</p>
+#### P:
+| Cabeça | - | Corpo |
+|:---|:---:|:---|
+|st |→| LEDGER ID stCommand CLOSE | 
+|stCommand |→| command stCommand | 
+|stCommand |→| EPSILON |
+|command |→| cmdSaida \| atrib \| cmdIF |
+|command |→| declaration |
+|cmdSaida |→| PRINT TEXT |
 
-### 2. 🎲 Banco de Dados
+---
+<style scoped>
+h4 { font-size: 40px; text-align: left }
+p, li { font-size: 30px; 
+        text-align: justify;
+}
+table {
+  font-size: 38px;
+}
+section { padding: 30px 20px 30px 20px;}
+</style>
+
+#### P:
+
+| Cabeça | - | Corpo |
+|:---|:---:|:---|
+|declaration |→| LET tipo ID |
+|declaration |→| LET tipo ID setaE values |
+|atrib |→| tipo ID setaE values |
+|tipo |→| DECI \| INT \| STR \| BOO \| KEY \| NULL |
+|values |→| OPR |
+|OPR |→| expr |
+|expr |→| expr OPR_COMP exprNum 📌 |
+|expr |→| exprNum |
+
+---
+
+<style scoped>
+h4 { font-size: 40px; text-align: left }
+p, li { font-size: 30px; 
+        text-align: justify;
+}
+table {
+  font-size: 38px;
+}
+section { padding: 30px 20px 30px 20px;}
+</style>
+
+#### P:
+
+| Cabeça | - | Corpo |
+|:---|:---:|:---|
+|exprNum |→| exprNum OPR_ARITME term 📌 |
+|exprNum |→| term |
+|term |→| PAR_OPEN expr PAR_CLOSE |
+|term |→| NOT term \| NUMBER \| TRUE |
+|term |→| tipo ID \| TEXT \| FALSE |
+|OPR_ARITME |→| SOMA \| SUB \| DIV \| MULT|
+|OPR_ARITME |→| RESTO|
+|OPR_COMP |→| OR \| AND \| IGUAL \| DIF \| MENOR \| MAIOR|
+
+
+
+---
+
+<style scoped>
+h4 { font-size: 40px; text-align: left }
+p, li { font-size: 30px; 
+        text-align: justify;
+}
+table {
+  font-size: 38px;
+}
+section { padding: 30px 20px 30px 20px;}
+</style>
+
+#### P:
+
+| Cabeça | - | Corpo |
+|:---|:---:|:---|
+|OPR_COMP |→| MAIOR_IGUAL \| MENOR_IGUAL |
+|cmdIF |→| IF PAR_OPEN OPR PAR_CLOSE KEY_OPEN stCommand KEY_CLOSE cmdElse|
+|cmdElse |→| ELSE KEY_OPEN stCommand KEY_CLOSE|
+|cmdElse |→| EPSILON|
+|EPSILON |→| |
+
+
+---
+
+### 2. 📚 Principais Classes
+Descreve o funcionamento das principais classes do projeto.
+
+
+
+### 3. 🎲 Banco de Dados
 
 Inserir diagramas de representação do banco de dados
 
