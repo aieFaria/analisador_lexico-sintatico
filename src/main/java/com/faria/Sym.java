@@ -8,47 +8,49 @@ package com.faria;
 /** CUP generated class containing symbol constants. */
 public class Sym {
   /* terminals */
-  public static final int RESTO = 17;
-  public static final int MULT = 15;
-  public static final int SOMA = 13;
-  public static final int STR = 21;
-  public static final int setaE = 10;
-  public static final int INT = 20;
-  public static final int DECI = 19;
-  public static final int PAR_CLOSE = 6;
-  public static final int NOT = 18;
-  public static final int AND = 28;
-  public static final int IGUAL = 29;
-  public static final int OR = 27;
-  public static final int DIV = 16;
-  public static final int IF = 35;
-  public static final int ID = 8;
+  public static final int RESTO = 18;
+  public static final int MULT = 16;
+  public static final int SOMA = 14;
+  public static final int STR = 22;
+  public static final int setaE = 11;
+  public static final int INT = 21;
+  public static final int DECI = 20;
+  public static final int PAR_CLOSE = 7;
+  public static final int NOT = 19;
+  public static final int AND = 29;
+  public static final int IGUAL = 30;
+  public static final int OR = 28;
+  public static final int DIV = 17;
+  public static final int IF = 36;
+  public static final int ID = 9;
   public static final int EOF = 0;
-  public static final int KEY_CLOSE = 12;
-  public static final int MAIOR = 31;
-  public static final int TRUE = 25;
+  public static final int KEY_CLOSE = 13;
+  public static final int MAIOR = 32;
+  public static final int TRUE = 26;
   public static final int error = 1;
-  public static final int PAR_OPEN = 5;
-  public static final int DIF = 30;
-  public static final int NULL = 24;
-  public static final int MENOR = 32;
-  public static final int LEDGER = 3;
-  public static final int ELSE = 36;
-  public static final int BOO = 22;
-  public static final int LET = 9;
-  public static final int KEY_OPEN = 11;
-  public static final int KEY = 23;
+  public static final int PAR_OPEN = 6;
+  public static final int DIF = 31;
+  public static final int NULL = 25;
+  public static final int MENOR = 33;
+  public static final int NUMBER = 3;
+  public static final int LEDGER = 4;
+  public static final int ELSE = 37;
+  public static final int BOO = 23;
+  public static final int LET = 10;
+  public static final int KEY_OPEN = 12;
+  public static final int KEY = 24;
   public static final int TEXT = 2;
-  public static final int MENOR_IGUAL = 34;
-  public static final int CLOSE = 4;
-  public static final int FALSE = 26;
-  public static final int SUB = 14;
-  public static final int MAIOR_IGUAL = 33;
-  public static final int PRINT = 7;
+  public static final int MENOR_IGUAL = 35;
+  public static final int CLOSE = 5;
+  public static final int FALSE = 27;
+  public static final int SUB = 15;
+  public static final int MAIOR_IGUAL = 34;
+  public static final int PRINT = 8;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
   "TEXT",
+  "NUMBER",
   "LEDGER",
   "CLOSE",
   "PAR_OPEN",
