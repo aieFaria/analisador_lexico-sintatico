@@ -1,6 +1,7 @@
 package com.faria;
 
 import java_cup.runtime.Symbol;
+import java_cup.runtime.ComplexSymbolFactory;
 
 %%
 
@@ -40,6 +41,7 @@ espaco = [ \t\r\n]+
 
 id     = [a-zA-Z_$][a-zA-Z0-9_$]*
 texto  = \'[^\']*\' | \"[^\"]*\"
+numero = {digito}+("."{digito}+)?
 
 %%
 
@@ -81,7 +83,7 @@ texto  = \'[^\']*\' | \"[^\"]*\"
 
 /* Operadores Relacionais e Lógicos */
 "=="            { return createSymbol(Sym.IGUAL); }
-"!="            { return createSymbol(Sym.DIF); }
+"!="            { System.out.println("Lexer leu: " + yytext()); return createSymbol(Sym.DIF); }
 ">>"            { return createSymbol(Sym.MAIOR); }
 "<<"            { return createSymbol(Sym.MENOR); }
 ">="            { return createSymbol(Sym.MAIOR_IGUAL); }
@@ -90,11 +92,13 @@ texto  = \'[^\']*\' | \"[^\"]*\"
 "||"            { return createSymbol(Sym.OR); }
 "!!"            { return createSymbol(Sym.NOT); }
 
-{id}            { return createSymbol(Sym.ID, yytext()); }
-{texto}         { return createSymbol(Sym.TEXT, yytext()); }
+{numero}        { return createSymbol(Sym.NUMBER, yytext()); }
+{id}            { System.out.println("Lexer leu: " + yytext()); return createSymbol(Sym.ID, yytext()); }
+{texto}         { System.out.println("Lexer leu: " + yytext()); return createSymbol(Sym.TEXT, yytext()); }
 {espaco}        { /* ignorar */ }
 
 .               { 
+                    System.out.println("Lexer leu algo estranho: " + yytext());
                     defineError(yyline + 1, yycolumn + 1, "Caractere inválido ou inesperado '" + yytext() + "'");
                     return createSymbol(Sym.error); // Não é obrigatório criar esse simbolo
                 }

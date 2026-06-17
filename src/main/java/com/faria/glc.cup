@@ -1,5 +1,8 @@
 package com.faria;
+
 import java_cup.runtime.*;
+import com.faria.tree.DerivationTree;
+import java.util.*;
 
 parser code {: 
  
@@ -14,55 +17,227 @@ parser code {:
  
     public void defineError(int linha, int coluna) {    
         Yylex scanner = (Yylex) this.getScanner(); 
-        scanner.defineError(linha, coluna); 
+        //scanner.defineError(linha, coluna); 
     } 
  
     public void defineError(String text) { 
         Yylex scanner = (Yylex) this.getScanner(); 
-        scanner.defineError(text); 
+      //  scanner.defineError(text); 
     } 
 :}; 
 
-terminal String TEXT;
+terminal String TEXT, NUMBER;
 terminal LEDGER, CLOSE, PAR_OPEN, PAR_CLOSE, PRINT, ID, LET, setaE, KEY_OPEN, 
          KEY_CLOSE, SOMA, SUB, MULT, DIV, RESTO, NOT, DECI, INT, STR, BOO, KEY, NULL, TRUE, FALSE,
          OR, AND, IGUAL, DIF, MAIOR, MENOR, MAIOR_IGUAL, MENOR_IGUAL, IF, ELSE;
-non terminal st, stCommand, command, EPSILON, declaration, atrib, cmdIF, values, cmdSaida,
-             tipo, OPR, expr, exprNum, exprNum2, term, OPR_COMP, 
-             OPR_ARITME, cmdElse;
 
-st ::= LEDGER ID stCommand CLOSE;
-stCommand ::= command stCommand | EPSILON;
-command ::= cmdSaida | declaration | atrib | cmdIF;
+non terminal DerivationTree st, stCommand, command, cmdSaida, declaration, atrib, cmdIF, values,
+                            tipo, OPR, expr, exprNum, term, OPR_ARITME, OPR_COMP, cmdElse,
+                            EPSILON;
+
+st ::= LEDGER ID:id stCommand:cmd CLOSE {:
+    List<DerivationTree> lista = new ArrayList<>();
+    lista.add( new DerivationTree("LEDGER") );
+    lista.add( new DerivationTree("ID", id) );
+    lista.add( cmd );
+    lista.add( new DerivationTree("CLOSE") );
+
+    RESULT = new DerivationTree("st", lista);
+:};
+
+stCommand ::= command:c stCommand:cmd {: 
+    List<DerivationTree> lista = new ArrayList<>();
+    lista.add( c );
+    lista.add( cmd );
+    
+    RESULT = new DerivationTree("stCommand", lista);
+:} | EPSILON:e {: 
+    //RESULT = new DerivationTree("stCommand", e);
+    // Não fazer nada
+:};
+
+command ::= cmdSaida:cs {:
+    RESULT = new DerivationTree("command", cs);
+:} | declaration:d {:
+    RESULT = new DerivationTree("command", d);
+:} | atrib:a {:
+    RESULT = new DerivationTree("command", a);
+:} | cmdIF:ci {:
+    RESULT = new DerivationTree("command", ci);
+:};
 
 cmdSaida ::= PRINT TEXT:s {:
-                        if(s instanceof String) {
-                            // Sucesso não precisa gerar erro
-                        } else {
-                            // Gerar erro
-                            // syntax_error(s);
-                        }
-                   :};
-declaration ::= LET tipo ID | LET tipo atrib;
-atrib ::= ID setaE values;
-tipo ::= DECI | INT | STR | BOO | KEY | NULL;
+                if(s instanceof String) {
+                    // Sucesso não precisa gerar erro
+                } else {
+                    // Gerar erro
+                    // syntax_error(s);
+                }
+               List<DerivationTree> lista = new ArrayList<>();
+               lista.add( new DerivationTree("PRINT") );
+               lista.add( new DerivationTree("TEXT", s) );
 
-values ::= OPR;
-OPR ::= expr | EPSILON;
+               RESULT = new DerivationTree("cmdSaida", lista);
+            :};
 
-expr ::= PAR_OPEN expr OPR_COMP expr PAR_CLOSE
-         | NOT expr
-         | exprNum | TRUE | FALSE;
+declaration ::= LET tipo:p ID:id {:
+    List<DerivationTree> lista = new ArrayList<>();
+    lista.add( new DerivationTree("LET") );
+    lista.add( p );
+    lista.add( new DerivationTree("ID", id) );
 
-exprNum ::= term exprNum2;
-exprNum2 ::= OPR_ARITME term exprNum2 | EPSILON;
-term ::= PAR_OPEN exprNum PAR_CLOSE | tipo ID;
+    RESULT = new DerivationTree("declaration", lista);
+:} | LET tipo:p ID:id setaE values:v {:
+    List<DerivationTree> lista = new ArrayList<>();
+    lista.add( new DerivationTree("LET") );
+    lista.add( p );
+    lista.add( new DerivationTree("ID", id) );
+    lista.add( new DerivationTree("setaE") );
+    lista.add( v );
 
-OPR_ARITME ::= SOMA | SUB | DIV | RESTO | MULT;
-OPR_COMP ::= OR | AND | IGUAL | DIF | MENOR | MAIOR | MAIOR_IGUAL | MENOR_IGUAL;
+    RESULT = new DerivationTree("declaration", lista);
+:};
 
-cmdIF ::= IF PAR_OPEN values PAR_CLOSE KEY_OPEN stCommand KEY_CLOSE cmdElse;
-cmdElse ::= ELSE KEY_OPEN stCommand KEY_CLOSE | EPSILON;
+atrib ::= tipo:p ID:id setaE values:v {:
+    List<DerivationTree> lista = new ArrayList<>();
+    lista.add( p );
+    lista.add( new DerivationTree("ID", id) );
+    lista.add( new DerivationTree("setaE") );
+    lista.add( v );
+
+    RESULT = new DerivationTree("atrib", lista);
+:};
+
+tipo ::= DECI {:
+    RESULT = new DerivationTree("tipo", new DerivationTree("DECI"));
+:} | INT {:
+    RESULT = new DerivationTree("tipo", new DerivationTree("INT"));
+:} | STR {:
+    RESULT = new DerivationTree("tipo", new DerivationTree("STR"));
+:} | BOO {:
+    RESULT = new DerivationTree("tipo", new DerivationTree("BOO"));
+:} | KEY {:
+    RESULT = new DerivationTree("tipo", new DerivationTree("KEY"));
+:} | NULL {:
+    RESULT = new DerivationTree("tipo", new DerivationTree("NULL"));
+:};
+
+values ::= OPR:o {:
+    RESULT = new DerivationTree("values", o);
+:};
+
+OPR ::= expr:ex {:
+    RESULT = new DerivationTree("OPR", ex);
+:};
+
+expr ::= expr:ex1 OPR_COMP:oc exprNum:ex2 {:
+    List<DerivationTree> lista = new ArrayList<>();
+    lista.add( ex1 );
+    lista.add( oc );
+    lista.add( ex2 );
+
+    RESULT = new DerivationTree("expr", lista);
+:} | exprNum:en {:
+    RESULT = new DerivationTree("expr", en);
+:};
+
+exprNum ::= exprNum:en OPR_ARITME:o term:t {:
+    List<DerivationTree> lista = new ArrayList<>();
+    lista.add( en );
+    lista.add( o );
+    lista.add( t );
+
+    RESULT = new DerivationTree("exprNum", lista);
+:} | term:t {:
+    RESULT = new DerivationTree("exprNum", Arrays.asList(t));
+:};
 
 
-EPSILON ::= ;
+term ::= PAR_OPEN expr:ex PAR_CLOSE {:
+    List<DerivationTree> lista = new ArrayList<>();
+    lista.add( new DerivationTree("PAR_OPEN") );
+    lista.add( ex );
+
+    lista.add( new DerivationTree("PAR_CLOSE") );
+    RESULT = new DerivationTree("term", lista);
+:} | NOT term:tm {:
+    List<DerivationTree> lista = new ArrayList<>();
+    lista.add( new DerivationTree("NOT") );
+    lista.add( tm );
+
+    RESULT = new DerivationTree("term", lista);
+:} | tipo:p ID:id {:
+    List<DerivationTree> lista = new ArrayList<>();
+    lista.add( p );
+
+    lista.add( new DerivationTree("ID", id) );
+    RESULT = new DerivationTree("term", lista);
+:} | NUMBER:n {:
+    RESULT = new DerivationTree("term", new DerivationTree("NUMBER", n));
+:} | TEXT:t {:
+    RESULT = new DerivationTree("term", new DerivationTree("TEXT", t));
+:} | TRUE {:
+    RESULT = new DerivationTree("term", new DerivationTree("TRUE"));
+:} | FALSE {:
+    RESULT = new DerivationTree("term", new DerivationTree("FALSE"));
+:};
+
+OPR_ARITME ::= SOMA {:
+    RESULT = new DerivationTree("OPR_ARITME", Arrays.asList( new DerivationTree("SOMA") ));
+:} | SUB {:
+    RESULT = new DerivationTree("OPR_ARITME", Arrays.asList( new DerivationTree("SUB") ));
+:} | DIV {:
+    RESULT = new DerivationTree("OPR_ARITME", Arrays.asList( new DerivationTree("DIV") ));
+:} | RESTO {:
+    RESULT = new DerivationTree("OPR_ARITME", Arrays.asList( new DerivationTree("RESTO") ));
+:} | MULT {:
+    RESULT = new DerivationTree("OPR_ARITME", Arrays.asList( new DerivationTree("MULT") ));
+:};
+
+OPR_COMP ::= OR {:
+    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("OR"));
+:} | AND {:
+    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("AND"));
+:} | IGUAL {:
+    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("IGUAL"));
+:} | DIF {:
+    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("DIF"));
+:} | MENOR {:
+    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("MENOR"));
+:} | MAIOR {:
+    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("MAIOR"));
+:} | MAIOR_IGUAL {:
+    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("MAIOR_IGUAL"));
+:} | MENOR_IGUAL {:
+    RESULT = new DerivationTree("OPR_COMP", new DerivationTree("MENOR_IGUAL"));
+:};
+
+cmdIF ::= IF PAR_OPEN OPR:o PAR_CLOSE KEY_OPEN stCommand:cmd KEY_CLOSE cmdElse:se {:
+    List<DerivationTree> lista = new ArrayList<>();
+    lista.add( new DerivationTree("IF") );
+    lista.add( new DerivationTree("PAR_OPEN") );
+    lista.add( o );
+    lista.add( new DerivationTree("PAR_CLOSE") );
+    lista.add( new DerivationTree("KEY_OPEN") );
+    lista.add( cmd );
+    lista.add( new DerivationTree("KEY_CLOSE") );
+    lista.add( se );
+
+    RESULT = new DerivationTree("cmdIF", lista);
+:};
+cmdElse ::= ELSE KEY_OPEN stCommand:cmd KEY_CLOSE {:
+    List<DerivationTree> lista = new ArrayList<>();
+    lista.add( new DerivationTree("ELSE") );
+    lista.add( new DerivationTree("KEY_OPEN") );
+    lista.add( cmd );
+    lista.add( new DerivationTree("KEY_CLOSE") );
+
+    RESULT = new DerivationTree("cmdElse", lista);
+:} | EPSILON {:
+    // Não fazer nada
+:};
+
+
+EPSILON ::= {:
+    // Não fazer nada
+:};
