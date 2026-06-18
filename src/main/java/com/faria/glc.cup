@@ -13,6 +13,8 @@ parser code {:
     public String currentTipo = "";
     public String currentValor = "";
 
+    // NOTA: Falta colocar "validarTipagem" dentro da GLC para fazer a validação, boa sorte!
+
     public void validarTipagem(String tipo, String valor, int line, int column) {
         // A lógica pesada foi movida para AnalisadorSintatico.java
         String erro = AnalisadorSintatico.validar(tipo, valor);
