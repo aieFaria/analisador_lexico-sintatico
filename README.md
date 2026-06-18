@@ -158,6 +158,62 @@ section { padding: 30px 20px 30px 20px;}
 ---
 
 <style scoped>
+h3 { font-size: 40px; text-align: center }
+p, li { font-size: 35px; 
+        text-align: justify;
+}
+section { padding: 30px 20px 30px 20px;}
+</style>
+
+### Objetivo Do Projeto 
+\
+O programa recebe um arquivo chamado input.txt contendo código na linguagem PIX Script. 
+\
+\
+O programa deve:
+Responder se os símbolos utilizados são válidos (análise léxica)
+Responder se a estrutura segue a gramática definida (análise sintática)
+Gerar uma árvore de derivação
+Armazenar símbolos e erros em um banco de dados 
+
+---
+
+<style scoped>
+h3 { font-size: 40px; text-align: center }
+p, li { font-size: 35px; 
+        text-align: center;
+}
+section { padding: 30px 20px 30px 20px;}
+</style>
+
+### Arquitetura  
+<br>
+<p align="center">
+  <img width="1040" height="436" alt="image" src="resource\imagemArquitetura.png" />
+</p>
+
+---
+
+<style scoped>
+h3 { font-size: 40px; text-align: center }
+p, li { font-size: 35px; 
+        text-align: justify;
+}
+section { padding: 30px 20px 30px 20px;}
+</style>
+
+### Classe Main.java
+\
+É o ponto de entrada do programa.
+\
+Ela abre o arquivo input.txt, cria o Scanner (JFlex), cria o Parser (JCup), o parser solicita tokens ao scanner, o parser verifica se a sequência respeita a gramática, caso tudo esteja correto imprime: 
+``` 
+Sintaxe correta! O Parse foi concluído com sucesso
+```
+
+---
+
+<style scoped>
 h3 { font-size: 40px; text-align: left }
 p, li { font-size: 35px; 
         text-align: justify;
