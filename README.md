@@ -212,6 +212,73 @@ Sintaxe correta! O Parse foi concluído com sucesso
 ```
 
 ---
+<style scoped>
+h3 { font-size: 40px; text-align: center }
+p, li { font-size: 35px; 
+        text-align: justify;
+}
+section { padding: 30px 20px 30px 20px;}
+</style>
+
+### JFlex - Análise Léxica
+Mostrar as regras do analisador léxico para validar e gerar os tokens;
+
+![](resource/jflex1.png)
+
+Responsável por transformar caracteres em tokens.
+Exemplo:       ```LET # idade <- 20 ```
+vira: 
+```
+LET
+INT
+ID
+setaE
+NUMBER
+```
+
+---
+
+<style scoped>
+h3 { font-size: 40px; text-align: center }
+p, li { font-size: 35px; 
+        text-align: justify;
+}
+section { padding: 30px 20px 30px 20px;}
+</style>
+
+### Tokens
+| Caracter | - | Token | Descrição |
+|:---|:---:|:---|:---|
+|LEDGER |→| LEDGER| Inicio do programa |
+|CLOSE |→| CLOSE | Fim do programa |
+|LET |→| LET | Declaração |
+|$> |→| PRINT | Impressão |
+|IF |→|IF |Condicional|
+|::|→|ELSE|Condicional|
+|TRUE|→|TRUE|Condicional|
+
+---
+
+<style scoped>
+h3 { font-size: 40px; text-align: center }
+p, li { font-size: 35px; 
+        text-align: justify;
+}
+section { padding: 30px 20px 30px 20px;}
+</style>
+
+### Tokens
+| Caracter | - | Token | Descrição |
+|:---|:---:|:---|:---|
+|FALSE |→| FALSE| Condicional |
+|$ |→| DECI | Decimal |
+|# |→| INT | Inteiro |
+|@ |→| STR | String |
+|? |→|BOO |Boleano|
+|!|→|KEY|Chave|
+|~|→|NULL|Nulo|
+
+---
 
 <style scoped>
 h3 { font-size: 40px; text-align: left }
@@ -222,7 +289,7 @@ section { padding: 30px 20px 30px 20px;}
 </style>
 
 
-### 1. ✏️ Gramática Livre De Contexto:
+### Gramática Livre De Contexto:
 
 G = (V, T, P, S), onde:
 - V (**Não-Terminais**) = { st, stCommand, command, cmdSaida, declaration, atrib, cmdIF, values, tipo, OPR, expr, exprNum, term, OPR_ARITME, OPR_COMP, cmdElse, EPSILON };
