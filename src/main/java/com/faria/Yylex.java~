@@ -6,6 +6,7 @@ package com.faria;
 
 import java_cup.runtime.Symbol;
 import com.faria.utils.Database;
+import com.faria.utils.*;
 
 
 @SuppressWarnings("fallthrough")
@@ -350,14 +351,15 @@ public class Yylex implements java_cup.runtime.Scanner {
         return new Symbol(type, yyline + 1, yycolumn + 1, value);
     }
 
-    // Sistema de Log de Erros exigido pelo professor Gomide
-    public void defineError(int line, int column, String text) {
-        System.err.println("Erro Léxico [Linha " + line + ", Coluna " + column + "]: " + text);
-        // Observação: Aqui no futuro você conectará o seu INSERT do banco de dados (tabela errorlog)
+    private ListError listError = new ListError(); // <-- Mochila criada no Lexer!
+
+    public ListError getListError() {
+        return this.listError;
     }
 
-    public void defineError(int line, int column) {
-        this.defineError(line, column, "");
+    public void defineError(int line, int column, String text) {
+        // Envia erros léxicos para a mesma lista que o Parser!
+        this.listError.defineError(line, column, "[Léxico] " + text);
     }
 
 

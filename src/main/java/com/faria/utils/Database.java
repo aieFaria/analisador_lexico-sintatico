@@ -117,11 +117,11 @@ public class Database {
         try (Connection conn = getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(2, descricao);
-            pstmt.setInt(3, line);
-            pstmt.setInt(4, column);
-            pstmt.setString(5, tipo);
-            pstmt.setInt(6, codeinfo_id);
+            pstmt.setString(1, descricao);
+            pstmt.setInt(2, line);
+            pstmt.setInt(3, column);
+            pstmt.setString(4, tipo);
+            pstmt.setInt(5, codeinfo_id);
 
             pstmt.executeUpdate();
         } catch (SQLException e) {

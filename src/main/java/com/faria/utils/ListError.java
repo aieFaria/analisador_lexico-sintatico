@@ -1,6 +1,9 @@
 package com.faria.utils;
 
-import java.util.List; 
+import java.util.List;
+import com.faria.utils.Database;
+
+import java_cup.reduce_action;
  
 public class ListError { 
  
@@ -26,6 +29,16 @@ public class ListError {
             } 
         } 
     } 
+
+    public void exportBd(int codeId) {
+        Database db = new Database();
+
+        for (Erro e: this.errors) {
+            String tipo = e.getText().startsWith("[Léxico]") ? "Léxico" : "Sintático";
+            
+            db.insertErro(e.getText(), e.getLine(), e.getColumn(), tipo, codeId);
+        }
+    }
  
     public void logErrors() { 
         for(Erro e : this.errors) {
@@ -35,6 +48,10 @@ public class ListError {
  
     public boolean hasErrors() { 
         return this.errors.size() > 0; 
-    } 
+    }
+
+	public List<Erro> getErrors() {
+		return this.errors;
+	} 
      
 } 

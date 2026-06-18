@@ -2,6 +2,7 @@ package com.faria;
 
 import java_cup.runtime.Symbol;
 import com.faria.utils.Database;
+import com.faria.utils.*;
 
 %%
 
@@ -32,14 +33,19 @@ import com.faria.utils.Database;
         return new Symbol(type, yyline + 1, yycolumn + 1, value);
     }
 
-    // Sistema de Log de Erros exigido pelo professor Gomide
+    private ListError listError = new ListError(); // <-- Mochila criada no Lexer!
+
+    public ListError getListError() {
+        return this.listError;
+    }
+
     public void defineError(int line, int column, String text) {
-        System.err.println("Erro Léxico [Linha " + line + ", Coluna " + column + "]: " + text);
-        // Observação: Aqui no futuro você conectará o seu INSERT do banco de dados (tabela errorlog)
+        // Envia erros léxicos para a mesma lista que o Parser!
+        this.listError.defineError(line, column, "[Léxico] " + text);
     }
 
     public void defineError(int line, int column) {
-        this.defineError(line, column, "");
+        this.listError.defineError(line, column);
     }
 %}
 

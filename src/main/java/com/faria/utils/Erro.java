@@ -21,10 +21,18 @@ public class Erro {
     } 
 
     public String getText() { 
-        return text; 
+        return text != null ? text : ""; 
     } 
         
     public void setText(String text) { 
         this.text = text; 
     } 
+
+    public int getLine(){
+        return this.line;
+    }
+
+    public int getColumn(){
+        return this.column;
+    }
 }

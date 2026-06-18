@@ -4,10 +4,22 @@ import java_cup.runtime.*;
 import com.faria.utils.DerivationTree;
 import com.faria.utils.TabelaSimbolos;
 import com.faria.utils.Token;
+import com.faria.utils.AnalisadorSintatico;
 import java.util.*;
 
 parser code {: 
     TabelaSimbolos tb = new TabelaSimbolos();
+
+    public String currentTipo = "";
+    public String currentValor = "";
+
+    public void validarTipagem(String tipo, String valor, int line, int column) {
+        // A lógica pesada foi movida para AnalisadorSintatico.java
+        String erro = AnalisadorSintatico.validar(tipo, valor);
+        if (erro != null) {
+            this.defineError(line, column, erro);
+        }
+    }
 
     public void inserirSimbolo(int refSym, Object lexemaZ, int line, int column) {
 
