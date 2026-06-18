@@ -110,21 +110,15 @@ command ::= cmdSaida:cs {:
     RESULT = new DerivationTree("command", ci);
 :};
 
-cmdSaida ::= PRINT:p TEXT:s {:
+cmdSaida ::= PRINT:p values:v {:
     inserirSimbolo(Sym.PRINT, "$>", pleft, pright);
 
-                if(s instanceof String) {
-                    // Sucesso não precisa gerar erro
-                } else {
-                    // Gerar erro
-                    // syntax_error(s);
-                }
-               List<DerivationTree> lista = new ArrayList<>();
-               lista.add( new DerivationTree("PRINT", "$>") );
-               lista.add( new DerivationTree("TEXT", s) );
+    List<DerivationTree> lista = new ArrayList<>();
+    lista.add( new DerivationTree("PRINT", "$>") );
+    lista.add( v );
 
-               RESULT = new DerivationTree("cmdSaida", lista);
-            :};
+    RESULT = new DerivationTree("cmdSaida", lista);
+:};
 
 declaration ::= LET:l tipo:p ID:id {:
     inserirSimbolo(Sym.LET, lleft, lright);
