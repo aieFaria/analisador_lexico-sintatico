@@ -281,6 +281,69 @@ section { padding: 30px 20px 30px 20px;}
 ---
 
 <style scoped>
+h3 { font-size: 40px; text-align: center }
+p, li { font-size: 35px; 
+        text-align: justify;
+}
+section { padding: 30px 20px 30px 20px;}
+</style>
+
+### Tokens
+| Caracter | - | Token | Descrição |
+|:---|:---:|:---|:---|
+|{ |→| KEY_OPEN| Chaves |
+|} |→| KEY_CLOSE | Chaves |
+|( |→| PAR_OPEN | Parênteses |
+|) |→| PAR_CLOSE | Parênteses |
+|<- |→|setaE |Atribuição|
+|++|→|SOMA|Soma|
+|--|→|SUB|Subtração|
+
+---
+
+<style scoped>
+h3 { font-size: 40px; text-align: center }
+p, li { font-size: 35px; 
+        text-align: justify;
+}
+section { padding: 30px 20px 30px 20px;}
+</style>
+
+### Tokens
+| Caracter | - | Token | Descrição |
+|:---|:---:|:---|:---|
+|**|→|MULT|Multiplicação|
+|//|→|DIV|Divisão|
+|%%|→|RESTO|Resto|
+|==|→|IGUAL|Igual|
+|!=|→|DIF|Diferente|
+|>>|→|MAIOR|Maior que|
+|<<|→|MENOR|Menor que|
+
+---
+
+<style scoped>
+h3 { font-size: 40px; text-align: center }
+p, li { font-size: 35px; 
+        text-align: justify;
+}
+section { padding: 30px 20px 30px 20px;}
+</style>
+
+### Tokens
+| Caracter | - | Token | Descrição |
+|:---|:---:|:---|:---|
+|>=|→|MAIOR_IGUAL|Maior igual|
+|<=|→|MENOR_IGUAL|Menor igual|
+|&&|→|AND|E|
+|\|\||→|OR|Ou|
+|!!|→|NOT|Não|
+|||||
+|||||
+
+---
+
+<style scoped>
 h3 { font-size: 40px; text-align: left }
 p, li { font-size: 35px; 
         text-align: justify;
@@ -289,7 +352,7 @@ section { padding: 30px 20px 30px 20px;}
 </style>
 
 
-### Gramática Livre De Contexto:
+### Gramática Livre De Contexto (GLC)
 
 G = (V, T, P, S), onde:
 - V (**Não-Terminais**) = { st, stCommand, command, cmdSaida, declaration, atrib, cmdIF, values, tipo, OPR, expr, exprNum, term, OPR_ARITME, OPR_COMP, cmdElse, EPSILON };
