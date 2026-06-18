@@ -16,6 +16,13 @@ import com.faria.utils.Database;
 
     Database db = new Database();
 
+    int codeinfo_id;
+
+    public Yylex(java.io.Reader in, int codeinfo_id) { 
+        this(in); 
+        this.codeinfo_id = codeinfo_id;
+    } 
+
     // Métodos para encapsular a criação de objetos Symbol do JCup
     private Symbol createSymbol(int type) {
         return new Symbol(type, yyline + 1, yycolumn + 1);

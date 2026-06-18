@@ -4,20 +4,30 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
 
+import com.faria.utils.Database;
 import com.faria.utils.DerivationTree;
 
 import java_cup.runtime.Symbol;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+
+        // Executar tudo de uma vez
+        RunParser.main(args);
+        RunScanner.main(args);
+
         String rootPath = Paths.get("").toAbsolutePath().toString();
         
         // Abre o arquivo diretamente
         FileReader fileReader = new FileReader(rootPath + "/input.txt");
 
+        // Code Info - Informações de execução
+        Database db = new Database();
+        int codeinfo_id = db.insertCode("input.txt");
+
         System.out.println("*".repeat(20) + " RESULTADO " + "*".repeat(20));
 
-        Yylex scanner = new Yylex(fileReader); 
+        Yylex scanner = new Yylex(fileReader, codeinfo_id); 
         Parser parser = new Parser(scanner); 
         
         try { 
@@ -40,5 +50,9 @@ public class Main {
         } finally {
             fileReader.close();
         }
+    }
+
+    public int codeInfo() {
+        return 0;
     }
 }

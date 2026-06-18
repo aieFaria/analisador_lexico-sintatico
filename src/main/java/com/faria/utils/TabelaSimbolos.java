@@ -10,7 +10,8 @@ public class TabelaSimbolos {
 
     // hashCtrl serve para controle de lexemas que já existem para não adicionar novamente a tabela de simbolos
     // Estou usando String mas pode ser um objeto Symbol
-    public void inserirSimbolo(String termo, Token token){
+    public void inserirSimbolo(String termo, Token token, int line, int coluna, int codeId) {
+
         if ( hashCtrl.contains(termo) ) {
             // Se já possuir não precisa fazer nada
             System.out.println("Já está na tabela de simbolos");
@@ -36,12 +37,19 @@ public class TabelaSimbolos {
             tabela.add(linha);
 
             hashCtrl.add(termo); // Para não repetir mesmo objeto
+
+            exportBd(id, termo, linha[2], linha[3],line, coluna, codeId);
+
         }
+
+        
     }
 
-    public void exportBd() {
-        // Método para exportar a tabela de simbolos para o banco de dados
-        // OBS: id precisa ser convertido para "int" novamente
+    public void exportBd(int id, String lexema, String token, String valor, int linha, int coluna, int codeinfo_id) {
+        Database db = new Database();
+
+        db.insertSimbolo(id, lexema, token, valor, linha, coluna, codeinfo_id);
+        
     }
 
     public void imprimirTabela() {

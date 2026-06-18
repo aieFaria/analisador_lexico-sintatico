@@ -42,14 +42,15 @@ public class Token {
     @Override
     public String toString() {
 
-        if (idLexema != null) {
-            return this.classe ? String.format("<%s>", this.tipo) : 
-                   String.format("<%s, %s>", this.tipo, this.idLexema);
-        } else {
-            return this.classe ? String.format("<%s>", this.tipo) : 
-                   String.format("<%s, %s>", this.tipo, this.lexema);
-        }
+        // if (idLexema != null) {
+        //     return this.classe ? String.format("<%s>", this.tipo) : 
+        //            String.format("<%s, %s>", this.tipo, this.idLexema);
+        // } else {
+        //     return this.classe ? String.format("<%s>", this.tipo) : 
+        //            String.format("<%s, %s>", this.tipo, this.lexema);
+        // }
 
+        return String.format("<%s>", this.tipo);
     }
 
     public void setId(String id) {

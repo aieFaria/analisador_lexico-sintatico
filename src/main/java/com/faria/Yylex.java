@@ -333,8 +333,13 @@ public class Yylex implements java_cup.runtime.Scanner {
   /* user code: */
 
     Database db = new Database();
-    
-    
+
+    int codeinfo_id;
+
+    public Yylex(java.io.Reader in, int codeinfo_id) { 
+        this(in); 
+        this.codeinfo_id = codeinfo_id;
+    } 
 
     // Métodos para encapsular a criação de objetos Symbol do JCup
     private Symbol createSymbol(int type) {
