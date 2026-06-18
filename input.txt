@@ -1,13 +1,9 @@
-LEDGER transferencia
- LET @nome <- 'Denecley Alvim'
- LET @produto <- 'Placa Nvidia 5070RTX'
- LET $valor <- 4999.99
- LET !pix <- "soinformatica@gmail.com"
- LET ?transfere <- ($dimdim >> 500.00 && !chave == "527.483.916-04")
- IF (!pix != "") {
- $> 'Realizar transferência'
- }
- :: {
- $> 'Aguardando chave PIX'
- }
-CLOSE 
+LEDGER programa
+	LET #a <- 50
+	LET #b <- 13
+	LET #c <- 0
+	IF (#a ++ #b << 100) {
+		#c <- #a ** 3.45
+	}
+	$> #c
+CLOSE
